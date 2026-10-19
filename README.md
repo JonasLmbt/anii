@@ -108,7 +108,7 @@ Ablauf also: CSV bearbeiten → committen → pushen → nach spätestens 2 Minu
 ## Lizenzen
 
 - Inhalte, Daten und Aufnahmen: [CC BY-SA 4.0](LICENSE-DATA.txt)
-- Code: [MIT](LICENSE)
+- Code: [MIT](LICENSE) – Repository: https://github.com/JonasLmbt/anii
 - Schrift „Anii Web“: verkleinerte Fassung von [Andika](https://software.sil.org/andika/) (SIL Global),
   [SIL Open Font License 1.1](site/assets/fonts/OFL.txt). Weil „Andika“ ein geschützter Schriftname ist,
   trägt die verkleinerte Fassung einen anderen Namen. Neu erzeugen mit `tools/make_font.py`.
