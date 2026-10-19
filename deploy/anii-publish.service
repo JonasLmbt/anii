@@ -1,0 +1,10 @@
+[Unit]
+Description=anii.lmbt.app: Änderungen von GitHub holen, bauen und veröffentlichen
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=jonas
+ExecStart=/home/jonas/anii-site/deploy/publish.sh
+Nice=10

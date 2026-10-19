@@ -1,0 +1,16 @@
+{
+  "name": "Anii · Balanka",
+  "short_name": "Anii",
+  "description": "Dictionnaire et entraîneur de vocabulaire anii (Balanka, Togo) – Wörterbuch und Vokabeltrainer",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf6ef",
+  "theme_color": "#7a3b12",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

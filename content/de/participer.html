@@ -1,0 +1,43 @@
+<div class="prose">
+<h1>{{icon:hand-heart}} Mitmachen</h1>
+<p class="lead">Eine Sprache lebt von denen, die sie sprechen. Du sprichst Anii aus Balanka? Dann ist deine Hilfe besonders wertvoll.</p>
+
+<h2>Was du tun kannst</h2>
+<ul>
+<li><b>Korrigieren</b>: ein Wort, eine Übersetzung oder ein Beispiel. Bei jedem Wort im Wörterbuch gibt es den Link „Korrektur vorschlagen“.</li>
+<li><b>Ergänzen</b>: fehlende Wörter, mit Plural und Beispielsatz.</li>
+<li><b>Prüfen</b>: die Herkunft der Wörter. Ein Wort gilt als „geprüft“, wenn jemand aus Balanka es bestätigt hat.</li>
+<li><b>Aufnehmen</b>: Wörter einsprechen. Dafür braucht es die schriftliche Zustimmung der aufgenommenen Person.</li>
+</ul>
+
+<h2>Vorschlag schicken</h2>
+<p>Das Formular verschickt nichts von selbst. Es erstellt einen Text, den du per WhatsApp, SMS oder auf anderem Weg an das Projektteam schicken kannst.</p>
+{{todo:Kontaktperson in Balanka / Nummer oder Gruppe, an die Vorschläge gehen}}
+<form id="contrib" class="panel">
+<label class="field">Art
+<select name="type"><option value="fix">Korrektur eines Wortes</option><option value="new">Neues Wort</option><option value="other">Sonstige Anmerkung</option></select></label>
+<label class="field">Wort oder Nummer <small>z. B. w0012</small><input name="word" autocomplete="off" lang="blo"></label>
+<label class="field">Dein Vorschlag<textarea name="text" lang="blo"></textarea></label>
+<label class="field">Dein Name <small>freiwillig</small><input name="name" autocomplete="name"></label>
+<label class="field">Dein Dorf <small>freiwillig</small><input name="village"></label>
+<p class="small muted">Dieser Text wird geteilt:</p>
+<pre id="contrib-preview" class="panel small" style="white-space:pre-wrap"></pre>
+<div class="row gap">
+<button type="button" class="btn primary" id="contrib-share" hidden>{{icon:share-2}} Teilen</button>
+<button type="button" class="btn" id="contrib-copy">{{icon:copy}} Text kopieren</button>
+</div>
+<p id="contrib-msg" class="small" role="status"></p>
+</form>
+
+<h2>Für technisch Versierte</h2>
+<p>Alle Daten stehen in einer CSV-Datei in einem öffentlichen GitHub-Repository. Dort kann man ein Issue eröffnen oder direkt eine Änderung vorschlagen.</p>
+{{todo:Link zum GitHub-Repository}}
+
+<h2>Aufnahmen machen</h2>
+<ul>
+<li>An einem ruhigen Ort aufnehmen, das Handy etwa 20 cm vor dem Mund.</li>
+<li>Ein Wort pro Datei. Die Datei nach der Nummer des Wortes benennen (z. B. <code>w0012.mp3</code>).</li>
+<li>Notieren, wer spricht, und eine schriftliche Erlaubnis einholen, die Aufnahme unter CC BY-SA 4.0 zu veröffentlichen.</li>
+</ul>
+{{todo:Einverständniserklärung für Stimmen (Französisch)}}
+</div>
