@@ -60,6 +60,23 @@ die Lizenz (CC BY-SA verlangt die Namensnennung der Urheber) und für die Archiv
 Commons. Außerdem lassen sich so alle Aufnahmen einer Person entfernen, falls sie ihre Zustimmung
 zurückzieht.
 
+## Online-Editor
+
+Unter **https://anii.lmbt.app/admin/** (Passwort) kann man Wörter anlegen und bearbeiten, Aufnahmen
+direkt im Browser machen oder hochladen und Sprecher verwalten. Neue Wörter bekommen automatisch die
+nächste freie ID, gelöschte IDs werden nie wieder vergeben. Vor dem Speichern läuft dieselbe Prüfung
+wie beim Build. Fehler (z. B. ə statt ǝ) verhindern das Speichern, Warnungen werden nur angezeigt.
+
+Technik: [`admin/app.py`](admin/app.py) (nur Python-Standardbibliothek) läuft als `anii-admin.service`
+auf 127.0.0.1:8101 in einem eigenen Klon `~/anii-edit`. Jede Änderung wird dort committet und per
+Deploy-Key (`github-anii`) zu GitHub gepusht. Der Veröffentlichungs-Timer baut daraus die Seite neu.
+Die öffentliche Seite bleibt rein statisch.
+
+- Passwort setzen oder ändern (auf dem Server):  `python3 ~/anii-edit/admin/app.py passwd`
+- Nach Änderungen am Editor-Code:  `cd ~/anii-edit && git pull && sudo systemctl restart anii-admin`
+- Wer die CSV auch am Laptop bearbeitet, vorher `git pull`, denn der Editor committet direkt auf `main`.
+- Eine Excel-Tabelle übernehmen, ohne IDs zu verlieren: `tools/import_xlsx.py` (siehe Kopf der Datei).
+
 ## Prüfen und bauen
 
 Auf dem Server (oder überall mit Python ≥ 3.9):
