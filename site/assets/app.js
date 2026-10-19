@@ -718,6 +718,7 @@
           c.e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", c.e.ex, " »") : null,
           c.e.no ? h("div", { class: "note muted small" }, c.e.no) : null);
         backSide.hidden = true;
+        const divider = h("hr", { hidden: true }); // Trennlinie erst nach dem Umdrehen, damit die Vorderseite mittig steht
         const flipBtn = h("button", { class: "btn primary block", type: "button", onclick: flip }, t("t_flip"));
         const rate = h("div", { class: "row gap rate", hidden: true },
           h("button", { class: "btn again", type: "button", onclick: () => answer(false) }, icon("rotate-ccw"), t("t_again")),
@@ -726,6 +727,7 @@
           if (flipped) return;
           flipped = true;
           backSide.hidden = false;
+          divider.hidden = false;
           flipBtn.hidden = true;
           rate.hidden = false;
         }
@@ -741,7 +743,7 @@
         wrap.replaceChildren(
           practiceHeader(t("t_cards") + " · " + s.title, s.back, first.size, total),
           h("div", { class: "panel flashcard", onclick: (e) => { if (!e.target.closest("button")) flip(); }, role: "button", tabindex: "0", "aria-label": t("t_flip") },
-            promptSide(c), h("hr"), backSide),
+            promptSide(c), divider, backSide),
           flipBtn, rate);
       }
       function done() {

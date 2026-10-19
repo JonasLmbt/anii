@@ -243,7 +243,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 .combine label { display: flex; gap: .5rem; align-items: center; padding: .35rem 0; font-weight: 400; }
 .combine input { width: auto; }
 
-.practice { max-width: 620px; }
+.practice { max-width: 620px; margin: 0 auto; }
 .practice-head { display: flex; align-items: center; gap: .7rem; margin: .6rem 0; }
 .practice-title { flex: 1; min-width: 0; }
 .practice-title small { color: var(--muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
