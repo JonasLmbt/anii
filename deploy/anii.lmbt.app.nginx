@@ -25,7 +25,6 @@ server {
     if ($request_method !~ ^(GET|HEAD)$) { set $deny_method "1"; }
     if ($uri ~ ^/admin/) { set $deny_method ""; }
     if ($deny_method) { return 405; }
-|HEAD)$) { return 405; }
 
     location / { expires -1; try_files $uri $uri/ =404; }
     # Service Worker und Seiten immer neu prüfen, damit Updates ankommen.
