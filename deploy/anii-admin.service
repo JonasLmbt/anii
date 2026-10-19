@@ -1,0 +1,15 @@
+[Unit]
+Description=anii.lmbt.app: Online-Editor (nur 127.0.0.1, hinter nginx /admin/)
+After=network-online.target
+
+[Service]
+User=jonas
+Environment=ANII_REPO=/home/jonas/anii-edit
+Environment=ANII_ADMIN_PORT=8101
+ExecStart=/usr/bin/python3 /home/jonas/anii-edit/admin/app.py
+Restart=on-failure
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

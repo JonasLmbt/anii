@@ -38,7 +38,7 @@ self.addEventListener("fetch", (event) => {
     );
     return;
   }
-  if (u.pathname.startsWith("/telechargement/")) return; // Downloads immer frisch
+  if (u.pathname.startsWith("/telechargement/") || u.pathname.startsWith("/admin")) return; // Downloads und Editor immer frisch
 
   event.respondWith(
     caches.open(SHELL).then(async (c) => {
