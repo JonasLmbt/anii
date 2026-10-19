@@ -383,7 +383,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def same_origin(self):
         origin = self.headers.get("Origin") or self.headers.get("Referer") or ""
         host = self.headers.get("X-Forwarded-Host") or self.headers.get("Host") or ""
-        return bool(origin) and urlparse(origin).netloc == host
+        return bool(origin) and (urlparse(origin).hostname or "") == host.split(":")[0]
 
     def do_GET(self):
         path = urlparse(self.path).path
