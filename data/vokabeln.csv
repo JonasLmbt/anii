@@ -1,38 +1,90 @@
-id;anii;francais;lektion;plural;beispiel;dialekt;quelle;datum;audio;sprecher;geprueft;notiz
-w0001;Magala;Bonjour;1 · Salutations;Magalama;;Balanka;Karim;2026-09-30;;;;pendant le matin (4h-11h)
-w0002;Mufile;Bon midi;1 · Salutations;Mufilema;;Balanka;Karim;2026-09-30;;;;pendant le midi (12h-15h)
-w0003;Gitoonfile;Bonsoir;1 · Salutations;Gitoonfilema;;Balanka;Karim;2026-09-30;;;;pendant le soir (15h-23h)
-w0004;Magasana;Bonne arrivée;1 · Salutations;Magasanama;;Balanka;Karim;2026-09-30;;;;repond: ee
-w0005;Gafalafe?;Et la maison?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: alafia
-w0006;alafia;la santé;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0007;Minǝbayitɔɔ?;Comment tu t'appelles?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: ntane
-w0008;ntane;je m'appelle;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0009;Areenaʊtee?;Où vas-tu?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0010;mdɔbǝ;je sors;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0011;ntee guya;je vais au marché;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0012;ntee awaraka;je vais au champs;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0013;Bulǝsee;au revoir / à plus tard;1 · Salutations;Bulǝseema;;Balanka;Karim;2026-09-30;;;;"quand on se revoit le même jour; sinon: Bupǝragǝsǝŋ"
-w0014;cɔɔpɩ;aller revenir;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;on dit cela à qn qui sort
-w0015;Bupǝragǝsǝŋ;à demain;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0016;Buruku naŋǝrǝtu;Bonne nuit;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;"""que dieu fait que tu te reveilles sain et sauf"""
-w0017;buruku;dieu;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0018;Mantǝma;Bon travail / merci;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0019;bunǝma;c'est bon;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
-w0020;ama;je (suis);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0021;owo;tu (es);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0022;are;il / elle (est);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0023;atʊ;nous (sommes) / ensemble;2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0024;bare;vous (êtes);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0025;bibi;ils/elles (sont);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
-w0026;gikubula;le matin;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
-w0027;gifisoono;le midi;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
-w0028;gitoonfile;le soir;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
-w0029;anakǝru;la lune;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
-w0030;ufile;le soleil;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
-w0031;aditɛɛnɛ;lundi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0032;atalaata;mardi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0033;alaarba;mercredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0034;alaamisi;jeudi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0035;arisǝma;vendredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0036;asiibi;samedi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
-w0037;lahadi;dimanche;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+id;anii;deutsch;francais;lektion;plural;beispiel;dialekt;quelle;datum;audio;sprecher;geprueft;notiz
+w0001;Magala;;Bonjour;1 · Salutations;Magalama;;Balanka;Karim;2026-09-30;;;;pendant le matin (4h-11h)
+w0002;Mufile;;Bon midi;1 · Salutations;Mufilema;;Balanka;Karim;2026-09-30;;;;pendant le midi (12h-15h)
+w0003;Gitoonfile;;Bonsoir;1 · Salutations;Gitoonfilema;;Balanka;Karim;2026-09-30;;;;pendant le soir (15h-23h)
+w0004;Magasana;;Bonne arrivée;1 · Salutations;Magasanama;;Balanka;Karim;2026-09-30;;;;repond: ee
+w0005;Gafalafe?;;Et la maison?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: alafia
+w0006;alafia;;la santé;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0007;Minǝbayitɔɔ?;;Comment tu t'appelles?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: ntane
+w0008;ntane;;je m'appelle;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0009;Areenaʊtee?;;Où vas-tu?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0010;mdɔbǝ;;je sors;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0011;ntee guya;;je vais au marché;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0012;ntee awaraka;;je vais au champs;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0013;Bulǝsee;;au revoir / à plus tard;1 · Salutations;Bulǝseema;;Balanka;Karim;2026-09-30;;;;"quand on se revoit le même jour; sinon: Bupǝragǝsǝŋ"
+w0014;cɔɔpɩ;;aller revenir;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;on dit cela à qn qui sort
+w0015;Bupǝragǝsǝŋ;;à demain;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0016;Buruku naŋǝrǝtu;;Bonne nuit;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;"""que dieu fait que tu te reveilles sain et sauf"""
+w0017;buruku;;dieu;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0018;Mantǝma;;Bon travail / merci;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0019;bunǝma;;c'est bon;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0020;ama;;je (suis);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0021;owo;;tu (es);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0022;are;;il / elle (est);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0023;atʊ;;nous (sommes) / ensemble;2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0024;bare;;vous (êtes);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0025;bibi;;ils/elles (sont);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0026;gikubula;;le matin;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0027;gifisoono;;le midi;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0028;gitoonfile;;le soir;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0029;anakǝru;;la lune;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0030;ufile;;le soleil;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0031;aditɛɛnɛ;;lundi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0032;atalaata;;mardi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0033;alaarba;;mercredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0034;alaamisi;;jeudi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0035;arisǝma;;vendredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0036;asiibi;;samedi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0037;lahadi;;dimanche;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0038;ifile ikɔɔli;;septe jours;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0039;ŋdǝŋ;;aujourd'hui;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0040;galaa;;hier;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0041;gǝsaŋ;;demain;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0042;gasala;;avant-hier;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0043;gǝsaŋ makǝm;;après demain;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0044;gasala makǝm;;avant avant-hier;5 · Hier et demain;;;Balanka;Karim;2026-10-08;;;;
+w0045;abɔri;;l'animal;6 · Les animaux;ɩbɔri;;Balanka;Karim;2026-10-08;;;;
+w0046;araama;;le mouton;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0047;utiyǝ;;la chèvre;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0048;anaamu;;le boeuf;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0049;asingo;;le cheval;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0050;akibɔbɔɔri;;le cheval;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;"""l'animal de la mort"""
+w0051;aki;;la mort;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0052;gakɔɔŋkoŋa;;l'âne;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0053;akiri;;le poulet;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0054;akirisono;;le coq;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0055;akirisimbura;;la poule;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;"""le poulet femel"""
+w0056;akirinari;;la poule;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;"""la mère poulet"""
+w0057;alikuku;;le pigeon;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0058;kpakpafiu;;le canard;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0059;tolotolo;;la dinde;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0060;gasinyao;;le chat;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0061;afina;;le chien;6 · Les animaux;;;Balanka;Karim;2026-10-08;;;;
+w0062;nsǝla;;un oeuf;6 · Les animaux;asǝla;;Balanka;Karim;2026-10-08;;;;
+w0063;afalaka;;à la maison;7 · Phrases utiles;;;Balanka;Karim;2026-10-08;;;;
+w0064;basana;;un étranger / une étrangère;7 · Phrases utiles;;;Balanka;Karim;2026-10-08;;;;
+w0065;ulǝǝsee;;le travail?;7 · Phrases utiles;ilǝǝsee;;Balanka;Karim;2026-10-08;;;;souvent utilisé comme question : « Comment s'est passé le travail ? »
+w0066;gitee;;on y va / allons-y;7 · Phrases utiles;;;Balanka;Karim;2026-10-08;;;;
+w0067;bokom;;je suis fatigué/e;7 · Phrases utiles;;;Balanka;;2026-10-08;;;;
+w0068;angola;;je suis malade;7 · Phrases utiles;;;Balanka;;2026-10-08;;;;
+w0069;akomma kabam;;j'ai faim;7 · Phrases utiles;;;Balanka;;2026-10-08;;;;
+w0070;unyandou kabam;;j'ai soif;7 · Phrases utiles;;;Balanka;;2026-10-08;;;;
+w0071;yaara;;(petit) marché quotidien;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0072;guya;;(grand) marché hebdomadaire;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0073;ijaŋi;;le piemont;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0074;ikunu;;le gombo;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0075;tǝmatǝ;;la tomate;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0076;jeele;;l'onion;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0077;ibarkaka;;l'arachide;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0078;butuŋa;;le sel;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0079;giri;;l'igname;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0080;afujeeje;;les petits poissons;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0081;ŋfǝla;;les poissons coupés;8 · Au marché;afǝla;;Balanka;Karim;2026-10-14;;;;
+w0082;ayo;;l'ail;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0083;ŋkurǝ;;le pagne;8 · Au marché;akurǝ;;Balanka;Karim;2026-10-14;;;;
+w0084;ŋkpatakpataa;;les chaussures;8 · Au marché;akpatakpataa;;Balanka;Karim;2026-10-14;;;;seulement utilisé en pluriel
+w0085;agɩdɩ;;la papaye;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0086;akutu;;l'orange;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0087;kodi;;la banane;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0088;suŋʊsuŋʊ;;le citron;8 · Au marché;;;Balanka;Karim;2026-10-14;;;;
+w0089;inini …?;;c'est combien …?;8 · Au marché;;inini agɩdɩ?;Balanka;Karim;2026-10-14;;;;
