@@ -1,7 +1,7 @@
 # anii.lmbt.app – statisches Anii-Wörterbuch (Cloudflare-Tunnel -> localhost:80)
 server {
     listen 80;
-    listen 127.0.0.1:8099;   # lokale Vorschau per SSH-Tunnel
+    listen 127.0.0.1:8100;   # lokale Vorschau per SSH-Tunnel
     server_name anii.lmbt.app;
 
     root /var/www/anii;

@@ -4,6 +4,7 @@ Description=anii.lmbt.app alle 2 Minuten aktualisieren
 [Timer]
 OnBootSec=1min
 OnUnitActiveSec=2min
+AccuracySec=15s
 
 [Install]
 WantedBy=timers.target
