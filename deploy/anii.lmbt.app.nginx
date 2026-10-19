@@ -20,10 +20,10 @@ server {
     add_header X-Content-Type-Options "nosniff" always;
     add_header Referrer-Policy "no-referrer" always;
 
-    # Nur GET/HEAD – außer für den Editor unter /admin/ (der prüft selbst)
+    # Nur GET/HEAD – außer für Editor (/admin/) und Konten (/api/), die prüfen selbst
     set $deny_method "";
     if ($request_method !~ ^(GET|HEAD)$) { set $deny_method "1"; }
-    if ($uri ~ ^/admin/) { set $deny_method ""; }
+    if ($uri ~ ^/(admin|api)/) { set $deny_method ""; }
     if ($deny_method) { return 405; }
 
     location / { expires -1; try_files $uri $uri/ =404; }
@@ -43,6 +43,14 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Host $host;
         proxy_read_timeout 120s;
+    }
+    # Konten für den Trainer (learn/app.py)
+    location /api/ {
+        if ($request_method !~ ^(GET|HEAD|POST)$) { return 405; }
+        client_max_body_size 1m;
+        proxy_pass http://127.0.0.1:8102;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
     }
     location ~ /\. { deny all; }
 }

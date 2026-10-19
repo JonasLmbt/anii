@@ -283,10 +283,78 @@
     if (result === "ok") box = Math.min(5, box + 1);
     else if (result === "bad") box = 1;
     else box = Math.max(1, box); // fast richtig: bleibt im Fach
-    L[k] = [box, today() + (result === "ok" ? INTERVAL[box] : 0)];
+    L[k] = [box, today() + (result === "ok" ? INTERVAL[box] : 0), Date.now()]; // [Fach, fällig am, geändert (ms)]
     store.set(LKEY, L);
+    Account.changed();
   }
   const isDue = (e, dir) => { const s = L[cardKey(e, dir)]; return s && s[0] >= 1 && s[1] <= today(); };
+
+  // ------------------------------------------------------------ Konto (freiwillig): Lernstand auf dem Server
+  // Ohne Konto bleibt alles im Browser. Mit Konto wird pro Karte abgeglichen (neuerer Stand gewinnt);
+  // offline Geübtes wird nachgeschickt, sobald wieder Netz da ist.
+  const Account = {
+    user: store.get("anii_user", null),
+    timer: 0,
+    listeners: [],
+    async call(path, body, keepalive) {
+      const res = await fetch("/api/" + path, {
+        method: body === undefined ? "GET" : "POST",
+        headers: body === undefined ? {} : { "Content-Type": "application/json" },
+        body: body === undefined ? undefined : JSON.stringify(body),
+        credentials: "same-origin",
+        keepalive: !!keepalive,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401 && path === "progress") this.setUser(null);
+      if (!res.ok) throw Object.assign(new Error(data.error || "net"), { code: data.error || "net" });
+      return data;
+    },
+    setUser(name) {
+      this.user = name;
+      if (name) store.set("anii_user", name); else store.del("anii_user");
+      this.listeners.forEach((f) => f());
+    },
+    adopt(cards) {
+      // Server liefert den zusammengeführten Stand; lokal Neueres (während der Anfrage) behalten
+      const merged = { ...cards };
+      for (const [k, v] of Object.entries(L)) if (!merged[k] || (v[2] || 0) > (merged[k][2] || 0)) merged[k] = v;
+      L = merged;
+      store.set(LKEY, L);
+    },
+    changed() {
+      if (!this.user) return;
+      store.set("anii_dirty", 1);
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.sync(), 2500);
+    },
+    async sync(keepalive) {
+      if (!this.user || navigator.onLine === false) return;
+      try {
+        const r = await this.call("progress", { cards: L }, keepalive);
+        this.adopt(r.cards);
+        store.del("anii_dirty");
+      } catch { /* offline: später nochmal */ }
+    },
+    async auth(kind, name, password) {
+      const r = await this.call(kind, { name, password, cards: L });
+      this.adopt(r.cards);
+      store.del("anii_dirty");
+      this.setUser(r.name);
+    },
+    async logout() {
+      await this.sync();
+      try { await this.call("logout", {}); } catch { /* egal */ }
+      // Geteilte Handys: Lernstand der Person nicht für die nächste liegen lassen
+      L = {};
+      store.del(LKEY);
+      store.del("anii_dirty");
+      this.setUser(null);
+    },
+  };
+  addEventListener("online", () => Account.sync());
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden" && store.get("anii_dirty", 0)) Account.sync(true);
+  });
 
   function trainApp(root, d) {
     let dir = store.get("anii_dir", "a2x");
@@ -317,6 +385,52 @@
       h("div", { class: "meter-bar" }, h("span", { style: `width:${n ? Math.round((k / n) * 100) : 0}%` })),
       h("small", null, t("t_known", { k, n })));
 
+    // Anmelden / Konto erstellen (freiwillig)
+    function accountBox() {
+      if (Account.user) {
+        return h("div", { class: "account in" }, icon("users"), " ", t("a_logged_in", { name: Account.user }), " · ",
+          h("button", { class: "linkish inline", type: "button", onclick: async () => { await Account.logout(); route(); } }, t("a_logout")));
+      }
+      const box = h("div", { class: "panel account" });
+      function show(mode) {
+        if (!mode) {
+          box.replaceChildren(h("p", null, icon("info"), " ", t("a_hint")),
+            h("div", { class: "row gap" },
+              h("button", { class: "btn primary", type: "button", onclick: () => show("login") }, t("a_login")),
+              h("button", { class: "btn", type: "button", onclick: () => show("register") }, t("a_register"))));
+          return;
+        }
+        const reg = mode === "register";
+        const name = h("input", { autocomplete: "username", autocapitalize: "words", maxlength: "30", required: true });
+        const pw = h("input", { type: "password", autocomplete: reg ? "new-password" : "current-password", required: true });
+        const pw2 = reg ? h("input", { type: "password", autocomplete: "new-password", required: true }) : null;
+        const msg = h("p", { class: "error", role: "alert" });
+        const ERR = { wrong: "a_err_wrong", taken: "a_err_taken", name: "a_err_name", password: "a_err_password", too_many: "a_err_too_many" };
+        box.replaceChildren(h("form", { onsubmit: async (ev) => {
+          ev.preventDefault();
+          msg.textContent = "";
+          if (reg && pw.value !== pw2.value) { msg.textContent = t("a_err_mismatch"); return; }
+          try {
+            await Account.auth(reg ? "register" : "login", name.value, pw.value);
+            route();
+          } catch (err) { msg.textContent = t(ERR[err.code] || "a_err_net"); }
+        } },
+          h("h2", null, reg ? t("a_register") : t("a_login")),
+          h("label", { class: "field" }, t("a_name"), reg ? h("small", null, t("a_name_hint")) : null, name),
+          h("label", { class: "field" }, t("a_password"), reg ? h("small", null, t("a_password_hint")) : null, pw),
+          reg ? h("label", { class: "field" }, t("a_password2"), pw2) : null,
+          msg,
+          h("div", { class: "row gap" },
+            h("button", { class: "btn primary", type: "submit" }, reg ? t("a_register") : t("a_login")),
+            h("button", { class: "linkish inline", type: "button", onclick: () => show(reg ? "login" : "register") }, reg ? t("a_have_account") : t("a_no_account"))),
+          h("p", { class: "muted small" }, reg ? t("a_privacy") : t("a_forgot"))));
+        name.focus();
+      }
+      show(null);
+      return box;
+    }
+    const savedNote = () => h("p", { class: "muted small" }, Account.user ? t("a_saved_account") : t("t_saved"));
+
     function viewHome() {
       const due = dueCards(d.entries).length;
       const picks = new Set();
@@ -325,6 +439,7 @@
       return h("div", null,
         h("h1", null, icon("layers"), " ", T.nav.train),
         h("p", { class: "lead" }, t("t_intro")),
+        accountBox(),
         dirControl(route),
         due
           ? h("a", { class: "card review", href: "#/p/cards/rev", style: "margin-top:1rem" },
@@ -342,7 +457,7 @@
           h("summary", null, t("t_combine")),
           d.lessons.map((l) => h("label", null, h("input", { type: "checkbox", onchange: (ev) => { ev.target.checked ? picks.add(l.id) : picks.delete(l.id); upd(); } }), l.name)),
           go) : null,
-        h("button", { class: "linkish small", type: "button", onclick: () => { if (confirm(t("t_reset_confirm"))) { L = {}; store.del(LKEY); route(); } } }, t("t_reset")));
+        h("button", { class: "linkish small", type: "button", onclick: () => { if (confirm(t("t_reset_confirm"))) { const now = Date.now(); for (const k of Object.keys(L)) L[k] = [0, 0, now]; store.set(LKEY, L); Account.changed(); route(); } } }, t("t_reset")));
     }
 
     function viewLesson(sel) {
@@ -378,7 +493,7 @@
         const st = L[cardKey(e, x)];
         let p;
         if (st && st[0] >= 1 && st[1] <= now) p = st[0] * 0.1;
-        else if (!st) p = 1 + i * 1e-4;
+        else if (!st || !st[0]) p = 1 + i * 1e-4;
         else p = 2 + (st[1] - now) * 0.01 + st[0] * 0.001;
         return { e, dir: x, p: p + Math.random() * 0.05 };
       }));
@@ -573,7 +688,7 @@
         wrap.replaceChildren(h("div", { class: "result" },
           h("div", { class: "score" }, h("b", null, correct), ` / ${total}`),
           h("h2", null, r === 1 ? t("t_perfect") : r >= 0.8 ? t("t_very_good") : r >= 0.5 ? t("t_good") : t("t_keep")),
-          h("p", { class: "muted small" }, t("t_saved")),
+          savedNote(),
           mistakes.length ? h("div", { class: "panel" }, h("h3", null, t("t_practice_more")),
             h("ul", { class: "mistakes" }, mistakes.map((c) => h("li", null, h("b", { lang: "blo" }, c.e.a), " = ", tr(c.e).text, " ", audioBtn(c.e))))) : null,
           h("div", { class: "row gap" },
@@ -635,7 +750,7 @@
           h("div", { class: "score" }, h("b", null, correct), ` / ${total}`),
           h("h2", null, t("t_done_cards")),
           h("p", null, t("t_done_cards_sub")),
-          h("p", { class: "muted small" }, t("t_saved")),
+          savedNote(),
           h("div", { class: "row gap" },
             h("button", { class: "btn primary", type: "button", onclick: route }, icon("rotate-ccw"), t("t_again_round")),
             h("a", { class: "btn", href: s.back }, t("t_back")))));
@@ -669,6 +784,9 @@
     }
     addEventListener("hashchange", route);
     route();
+    // Mit Konto: beim Öffnen den Stand vom Server holen (nicht mitten in einer Übung neu zeichnen)
+    if (Account.user) Account.sync().then(() => { if (!location.hash.startsWith("#/p/")) route(); });
+    Account.listeners.push(() => { if (!location.hash.startsWith("#/p/")) route(); });
   }
 
   // ============================================================ Mitmachen: Text zum Teilen erzeugen

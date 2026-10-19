@@ -298,3 +298,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
   .mode small { display: none; }
   .tabs a span { font-size: .9rem; }
 }
+
+/* ---------- Konto im Trainer ---------- */
+.account { margin: .8rem 0; }
+.account.in { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem; color: var(--muted); font-size: .95rem; }
+.account h2 { margin-top: 0; }
+.linkish.inline { display: inline; margin: 0; padding: 0; }

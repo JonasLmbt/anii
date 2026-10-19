@@ -1,0 +1,15 @@
+[Unit]
+Description=anii.lmbt.app: Konten für den Vokabeltrainer (nur 127.0.0.1, hinter nginx /api/)
+After=network-online.target
+
+[Service]
+User=jonas
+Environment=ANII_LEARN_DB=/home/jonas/anii-data/learn.db
+Environment=ANII_LEARN_PORT=8102
+ExecStart=/usr/bin/python3 /home/jonas/anii-site/learn/app.py
+Restart=on-failure
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

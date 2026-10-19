@@ -19,6 +19,7 @@ NEW=$(git rev-parse origin/main)
 if [ "$NEW" = "$(cat .last-published 2>/dev/null || true)" ] && [ "${1:-}" != "--force" ]; then
     exit 0
 fi
+OLD=$(git rev-parse HEAD)
 git reset -q --hard "$NEW"
 [ -x "$PY" ] || { ~/.local/bin/uv venv -q .venv && ~/.local/bin/uv pip install -q --python "$PY" -r requirements.txt; }
 
@@ -34,5 +35,7 @@ if [ "$(sums "$BUILD/a")" != "$(sums "$BUILD/b")" ]; then
 fi
 rsync -a --delete --chmod=D755,F644 "$BUILD/a"/ "$TARGET"/
 echo "$NEW" > .last-published
+# Konten-Dienst neu starten, wenn sich sein Code geändert hat
+if ! git diff --quiet "$OLD" "$NEW" -- learn/; then sudo -n systemctl restart anii-learn || echo "anii-learn bitte neu starten" >&2; fi
 echo "Veröffentlicht: $(git log -1 --format='%h %s')"
 grep -E "Fehler,|Fertig" "$BUILD/log-a.txt" || true

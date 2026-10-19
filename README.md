@@ -130,3 +130,18 @@ Ablauf also: CSV bearbeiten → committen → pushen → nach spätestens 2 Minu
   [SIL Open Font License 1.1](site/assets/fonts/OFL.txt). Weil „Andika“ ein geschützter Schriftname ist,
   trägt die verkleinerte Fassung einen anderen Namen. Neu erzeugen mit `tools/make_font.py`.
 - Icons: [Lucide](https://lucide.dev) (ISC)
+
+## Konten im Trainer (freiwillig)
+
+Wer sich beim Lernen anmeldet, bekommt den Lernstand auf dem Server gespeichert und auf allen Geräten
+abgeglichen (pro Karte gewinnt der neuere Stand; offline Geübtes wird nachgeschickt). Ohne Konto bleibt
+der Stand nur im Browser. Gespeichert werden nur Name, Passwort-Hash und Lernstand.
+
+Technik: [`learn/app.py`](learn/app.py) (Standardbibliothek + SQLite) als `anii-learn.service` auf
+127.0.0.1:8102 hinter nginx `/api/`, Datenbank `~/anii-data/learn.db`. Auf dem Server:
+
+```sh
+python3 ~/anii-site/learn/app.py list                    # Konten anzeigen
+python3 ~/anii-site/learn/app.py reset-password "Name"   # vergessenes Passwort neu setzen
+python3 ~/anii-site/learn/app.py delete "Name"           # Konto löschen
+```
