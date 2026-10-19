@@ -195,6 +195,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--b
 .tr { margin: .2rem 0; }
 .tr .lab { display: inline-block; min-width: 2.2rem; font-size: .75rem; font-weight: 700; color: var(--muted); }
 .ex { color: var(--muted); font-style: italic; font-size: .95rem; margin-top: .2rem; }
+.note { font-size: .92rem; margin-top: .25rem; }
+.note .lab { font-size: .75rem; font-weight: 700; color: var(--muted); margin-right: .2rem; }
 .meta { display: flex; flex-wrap: wrap; gap: .2rem .8rem; font-size: .8rem; color: var(--muted); margin-top: .35rem; }
 .badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .78rem; font-weight: 700; padding: .1rem .5rem; border-radius: 99px; }
 .badge.ok { background: var(--good-soft); color: var(--good); }

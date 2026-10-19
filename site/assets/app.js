@@ -204,6 +204,7 @@
         h("div", { class: "word-head" }, h("span", { class: "anii", lang: "blo" }, e.a, pl), audioBtn(e)),
         trs,
         e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", e.ex, " »") : null,
+        e.no ? h("div", { class: "note" }, h("span", { class: "lab" }, t("d_note")), " ", e.no) : null,
         h("div", { class: "meta" },
           e.ok ? h("span", { class: "badge ok" }, icon("shield-check"), t("d_checked")) : h("span", { class: "badge no" }, t("d_unchecked")),
           meta,
@@ -599,7 +600,8 @@
             ? h("div", { class: "q-main", lang: LANG }, tr(c.e).text)
             : h("div", null, h("div", { class: "q-main", lang: "blo" }, c.e.a), audioBtn(c.e)),
           c.e.pl ? h("div", { class: "muted small", lang: "blo" }, t("d_plural"), " ", c.e.pl) : null,
-          c.e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", c.e.ex, " »") : null);
+          c.e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", c.e.ex, " »") : null,
+          c.e.no ? h("div", { class: "note muted small" }, c.e.no) : null);
         backSide.hidden = true;
         const flipBtn = h("button", { class: "btn primary block", type: "button", onclick: flip }, t("t_flip"));
         const rate = h("div", { class: "row gap rate", hidden: true },

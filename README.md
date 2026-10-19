@@ -45,7 +45,7 @@ Die Datei ist **UTF-8** und **durch Semikolons getrennt**. In Excel: *Datei → 
 | `audio` | | Dateiname in `data/audio/`. Leer lassen, wenn die Datei wie die ID heißt (`w0012.mp3`) |
 | `sprecher` | bei Audio | Kürzel aus `data/sprecher.csv` |
 | `geprueft` | | `ja` oder `nein` – hat jemand aus Balanka das Wort bestätigt? |
-| `notiz` | | interne Anmerkung. Erscheint nicht auf der Website, ist aber in der CSV öffentlich |
+| `notiz` | | Anmerkung zum Gebrauch (z. B. „pendant le matin“, Antwort auf einen Gruß). Wird im Wörterbuch und auf den Karten angezeigt – also nichts Privates hineinschreiben |
 
 **IDs:** Lernstand im Trainer, Aufnahmen, Anki-Karten und Links (`/fr/dictionnaire/#w0012`) hängen an
 der ID. Deshalb darf man ein Wort korrigieren, ohne dass etwas verloren geht. Neue Zeilen lässt man

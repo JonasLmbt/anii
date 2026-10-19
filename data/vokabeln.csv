@@ -1,9 +1,38 @@
-id;anii;deutsch;francais;lektion;plural;beispiel;dialekt;quelle;datum;audio;sprecher;geprueft;notiz
-w0001;[mot a];[Platzhalter A];[exemple A];1 · Exemple;[pluriel a];[phrase d’exemple a];Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile, wird durch echte Vokabeln ersetzt
-w0002;[mot b];[Platzhalter B];[exemple B];1 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile
-w0003;[mot c];[Platzhalter C];[exemple C];1 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile
-w0004;[mot d];[Platzhalter D];[exemple D];1 · Exemple;;[phrase d’exemple d];Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile
-w0005;[mot e];[Platzhalter E];[exemple E];1 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;ja;Beispielzeile (als „geprüft“ markiert, nur zum Test der Anzeige)
-w0006;[mot f];[Platzhalter F];[exemple F];2 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile
-w0007;[mot g];[Platzhalter G];[exemple G];2 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile
-w0008;[mot h];;[exemple H];2 · Exemple;;;Balanka;PLATZHALTER – kein echtes Anii;2026-10-19;;;nein;Beispielzeile (nur französische Übersetzung)
+id;anii;francais;lektion;plural;beispiel;dialekt;quelle;datum;audio;sprecher;geprueft;notiz
+w0001;Magala;Bonjour;1 · Salutations;Magalama;;Balanka;Karim;2026-09-30;;;;pendant le matin (4h-11h)
+w0002;Mufile;Bon midi;1 · Salutations;Mufilema;;Balanka;Karim;2026-09-30;;;;pendant le midi (12h-15h)
+w0003;Gitoonfile;Bonsoir;1 · Salutations;Gitoonfilema;;Balanka;Karim;2026-09-30;;;;pendant le soir (15h-23h)
+w0004;Magasana;Bonne arrivée;1 · Salutations;Magasanama;;Balanka;Karim;2026-09-30;;;;repond: ee
+w0005;Gafalafe?;Et la maison?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: alafia
+w0006;alafia;la santé;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0007;Minǝbayitɔɔ?;Comment tu t'appelles?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;repond: ntane
+w0008;ntane;je m'appelle;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0009;AreenaƱtee?;Où vas-tu?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0010;mdɔbǝ;je sors;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0011;ntee guya;je vais au marché;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0012;ntee awaraka;je vais au champs;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0013;Bulǝsee;au revoir / à plus tard;1 · Salutations;Bulǝseema;;Balanka;Karim;2026-09-30;;;;"quand on se revoit le même jour; sinon: Bupǝragǝsǝŋ"
+w0014;cɔɔpɩ;aller revenir;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;on dit cela à qn qui sort
+w0015;Bupǝragǝsǝŋ;à demain;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0016;Buruku naŋǝrǝtu;Bonne nuit;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;"""que dieu fait que tu te reveilles sain et sauf"""
+w0017;buruku;dieu;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0018;Mantǝma;Bon travail / merci;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0019;bunǝma;c'est bon;1 · Salutations;;;Balanka;Karim;2026-09-30;;;;
+w0020;ama;je (suis);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0021;owo;tu (es);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0022;are;il / elle (est);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0023;atƱ;nous (sommes) / ensemble;2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0024;bare;vous (êtes);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0025;bibi;ils/elles (sont);2 · Pronoms;;;Balanka;Karim;2026-09-30;;;;
+w0026;gikubula;le matin;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0027;gifisoono;le midi;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0028;gitoonfile;le soir;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0029;anakǝru;la lune;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0030;ufile;le soleil;3 · La journée;;;Balanka;Karim;2026-10-08;;;;
+w0031;aditɛɛnɛ;lundi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0032;atalaata;mardi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0033;alaarba;mercredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0034;alaamisi;jeudi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0035;arisǝma;vendredi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0036;asiibi;samedi;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;
+w0037;lahadi;dimanche;4 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;;

@@ -27,10 +27,24 @@ AUDIO_DIR = DATA / "audio"
 
 COLUMNS = ["id", "anii", "deutsch", "francais", "lektion", "plural", "beispiel", "dialekt",
            "quelle", "datum", "audio", "sprecher", "geprueft", "notiz"]
-OPTIONAL_COLUMNS = {"id", "sprecher"}  # neuer als die ursprüngliche Spaltenliste
+OPTIONAL_COLUMNS = {"id", "sprecher", "deutsch", "francais"}  # id/sprecher sind neuer; eine Übersetzungsspalte reicht
 ANII_FIELDS = {"anii", "plural"}  # reiner Anii-Text (Beispielsätze können Übersetzungen enthalten)
 AUDIO_EXT = (".mp3", ".ogg", ".opus", ".m4a", ".webm", ".wav")
 ID_RE = re.compile(r"^w\d{4,}$")
+
+
+def _ranges(nums):
+    """[2, 3, 4, 7] -> '2–4, 7'"""
+    out, start, prev = [], None, None
+    for n in sorted(nums) + [None]:
+        if start is None:
+            start = prev = n
+        elif n is not None and n == prev + 1:
+            prev = n
+        else:
+            out.append(str(start) if start == prev else f"{start}–{prev}")
+            start = prev = n
+    return ", ".join(out)
 
 
 class Report:
@@ -53,7 +67,20 @@ class Report:
         return sum(1 for i in self.items if i[0] == level)
 
     def print(self):
+        # Gleiche Meldung in vielen Zeilen (z. B. leere Lektion) nur einmal ausgeben
+        groups = {}
         for level, where, msg in self.items:
+            m = re.match(r"^Zeile (\d+)(?: \(.*\))?$", where)
+            if m:
+                groups.setdefault((level, msg), []).append(int(m.group(1)))
+        done = set()
+        for level, where, msg in self.items:
+            lines = groups.get((level, msg), [])
+            if len(lines) > 3:
+                if (level, msg) not in done:
+                    done.add((level, msg))
+                    print(f"{level:8} {len(lines)} Zeilen ({_ranges(lines)}): {msg}")
+                continue
             print(f"{level:8} {where}: {msg}")
         print(f"\n{self.count('FEHLER')} Fehler, {self.count('WARNUNG')} Warnungen, {self.count('HINWEIS')} Hinweise")
 
@@ -113,6 +140,9 @@ def validate(header, rows, report, fix=False):
             report.warn(f"{CSV_FILE.name}:1", f"unbekannte Spalte „{col}“ wird ignoriert")
     if "id" not in header:
         report.error(f"{CSV_FILE.name}:1", "Spalte „id“ fehlt – mit  python3 tools/build_data.py --ids  anlegen lassen")
+    if "deutsch" not in header and "francais" not in header:
+        report.error(f"{CSV_FILE.name}:1", "es fehlt eine Übersetzungsspalte (deutsch oder francais)")
+    unchecked, dates = [], []
 
     entries, seen_ids, seen_full, by_word = [], {}, {}, {}
     changed = False
@@ -124,7 +154,12 @@ def validate(header, rows, report, fix=False):
             raw = row.get(col) or ""
             val = anii.nfc(raw).strip()
             val = re.sub(r"\s+", " ", val)
-            if val != raw:
+            if col == "datum":
+                m = re.match(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$", val)  # Excel (deutsch): 30.09.2026
+                if m:
+                    val = f"{m.group(3)}-{int(m.group(2)):02d}-{int(m.group(1)):02d}"
+                    dates.append(n)
+            if val != raw and col != "datum":
                 changed = True
             for ch, sug, desc in anii.check_chars(val, col in ANII_FIELDS):
                 hint = f" → „{sug}“" if sug else ""
@@ -148,8 +183,14 @@ def validate(header, rows, report, fix=False):
             report.error(where, "mindestens eine Übersetzung (deutsch oder francais) fehlt")
         if not e["lektion"]:
             report.error(where, "Pflichtfeld „lektion“ ist leer")
+        for col in ANII_FIELDS:
+            for word in re.findall(r"\w+", e[col]):
+                if any(ch.isupper() for ch in word[1:]) and not word.isupper():
+                    report.warn(f"{where}, {col}", f"Großbuchstabe mitten im Wort „{word}“ – Absicht? (z. B. Ʊ statt ʊ)")
 
-        if not e["id"]:
+        if not e["id"] and "id" not in header:
+            pass  # schon oben gemeldet (Spalte fehlt)
+        elif not e["id"]:
             report.error(where, "keine ID – mit  python3 tools/build_data.py --ids  vergeben lassen")
         elif not ID_RE.match(e["id"]):
             report.error(where, f"ID „{e['id']}“ hat nicht die Form w0001")
@@ -163,7 +204,7 @@ def validate(header, rows, report, fix=False):
             e["geprueft"] = "ja"
         elif g in ("", "nein", "non", "no", "0"):
             if g == "" and e["anii"]:
-                report.info(where, "„geprueft“ leer → nein")
+                unchecked.append(n)
             e["geprueft"] = "nein"
         else:
             report.warn(where, f"„geprueft“ = „{e['geprueft']}“, erwartet ja oder nein")
@@ -182,6 +223,10 @@ def validate(header, rows, report, fix=False):
         e["_line"] = n
         entries.append(e)
 
+    if unchecked:
+        report.info(f"{len(unchecked)} Zeilen", "„geprueft“ leer → nein")
+    if dates:
+        report.info(f"{len(dates)} Zeilen", "Datum TT.MM.JJJJ in JJJJ-MM-TT umgewandelt" + ("" if fix else " (mit --fix auch in der CSV)"))
     for word, lines in by_word.items():
         if len(lines) > 1:
             report.info(f"Zeilen {', '.join(map(str, lines))}", f"„{word}“ kommt mehrfach mit verschiedener Bedeutung vor (Homonym? sonst zusammenlegen)")
@@ -246,7 +291,7 @@ def build(entries, speakers, alphabet_rows, report, out):
         lessons[lid]["n"] += 1
         item = {"id": e["id"], "a": e["anii"], "l": lid, "fl": anii.first_letter(e["anii"]) or ""}
         for src, dst in (("deutsch", "de"), ("francais", "fr"), ("plural", "pl"), ("beispiel", "ex"),
-                         ("dialekt", "dia"), ("quelle", "src"), ("datum", "date"), ("sprecher", "sp")):
+                         ("dialekt", "dia"), ("quelle", "src"), ("datum", "date"), ("sprecher", "sp"), ("notiz", "no")):
             if e[src]:
                 item[dst] = e[src]
         if audio:
