@@ -117,7 +117,7 @@
     if (b) { e.preventDefault(); e.stopPropagation(); play(b.dataset.audio, b); }
   }, true);
   function audioBtn(entry, label) {
-    if (!entry.au) return h("span", { class: "speak off", title: t("no_audio"), "aria-label": t("no_audio") }, icon("mic"));
+    if (!entry.au) return null; // noch keine Aufnahme: kein Knopf
     return h("button", { class: "speak", type: "button", "data-audio": "/audio/" + entry.au, "aria-label": t("play") + " " + (label || entry.a) }, icon("volume-2"));
   }
 
@@ -194,22 +194,23 @@
       const trs = [LANG, OTHER].filter((l) => e[l]).map((l) =>
         h("div", { class: "tr", lang: l }, h("span", { class: "lab" }, l.toUpperCase()), " ", e[l]));
       const lesson = d.lessonById.get(e.l);
+      // knapp: Thema, ggf. abweichender Dialekt, Quelle, Datum – ohne Beschriftungen
+      const date = e.date && /^\d{4}-\d{2}-\d{2}$/.test(e.date) ? e.date.split("-").reverse().join(".") : e.date;
       const meta = [
-        lesson && [t("d_lesson"), lesson.name],
-        e.dia && [t("d_dialect"), e.dia],
-        e.src && [t("d_source"), e.src],
-        e.date && [t("d_date"), e.date],
-      ].filter(Boolean).map(([k, v]) => h("span", null, k + (LANG === "fr" ? " : " : ": "), v));
+        lesson && lesson.name.replace(/^\d+\s*·\s*/, ""),
+        e.dia && e.dia !== "Balanka" && e.dia,
+        e.src && t("d_source") + (LANG === "fr" ? " : " : ": ") + e.src,
+        date,
+      ].filter(Boolean).map((v) => h("span", null, v));
       return h("li", { class: "word", id: e.id },
         h("div", { class: "word-head" }, h("span", { class: "anii", lang: "blo" }, e.a, pl), audioBtn(e)),
         trs,
         e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", e.ex, " »") : null,
         e.no ? h("div", { class: "note" }, h("span", { class: "lab" }, t("d_note")), " ", e.no) : null,
         h("div", { class: "meta" },
-          e.ok ? h("span", { class: "badge ok" }, icon("shield-check"), t("d_checked")) : h("span", { class: "badge no" }, t("d_unchecked")),
           meta,
-          h("a", { class: "correct", href: T.urls.participer + "#" + e.id }, t("d_correct")),
-          h("span", { class: "muted" }, e.id)));
+          e.ok ? h("span", { class: "badge ok" }, "✓ ", t("d_checked")) : h("span", { class: "badge no" }, t("d_unchecked")),
+          h("a", { class: "correct", href: T.urls.participer + "#" + e.id }, t("d_correct"))));
     }
 
     function render() {
@@ -379,7 +380,7 @@
       for (const [v, label] of [["a2x", t("t_dir_a2x")], ["x2a", t("t_dir_x2a")], ["mix", t("t_dir_mix")]]) {
         seg.append(h("button", { type: "button", "aria-pressed": String(v === dir), onclick: () => { dir = v; store.set("anii_dir", v); onchange(); } }, label));
       }
-      return h("div", null, h("p", { class: "muted small" }, t("t_dir")), seg);
+      return h("div", { class: "row gap" }, h("span", { class: "muted small" }, t("t_dir")), seg);
     }
     const meter = (k, n) => h("div", { class: "meter" },
       h("div", { class: "meter-bar" }, h("span", { style: `width:${n ? Math.round((k / n) * 100) : 0}%` })),
@@ -388,19 +389,20 @@
     // Anmelden / Konto erstellen (freiwillig)
     function accountBox() {
       if (Account.user) {
-        return h("div", { class: "account in" }, icon("users"), " ", t("a_logged_in", { name: Account.user }), " · ",
+        return h("p", { class: "account in" }, t("a_logged_in", { name: Account.user }), " · ",
           h("button", { class: "linkish inline", type: "button", onclick: async () => { await Account.logout(); route(); } }, t("a_logout")));
       }
       const box = h("div", { class: "panel account" });
       function show(mode) {
         if (!mode) {
-          box.replaceChildren(h("p", null, icon("info"), " ", t("a_hint")),
-            h("div", { class: "row gap" },
-              h("button", { class: "btn primary", type: "button", onclick: () => show("login") }, t("a_login")),
-              h("button", { class: "btn", type: "button", onclick: () => show("register") }, t("a_register"))));
+          box.className = "account hint";
+          box.replaceChildren(h("p", null, t("a_hint"), " ",
+            h("button", { class: "linkish inline", type: "button", onclick: () => show("login") }, t("a_login")), " · ",
+            h("button", { class: "linkish inline", type: "button", onclick: () => show("register") }, t("a_register"))));
           return;
         }
         const reg = mode === "register";
+        box.className = "panel account";
         const name = h("input", { autocomplete: "username", autocapitalize: "words", maxlength: "30", required: true });
         const pw = h("input", { type: "password", autocomplete: reg ? "new-password" : "current-password", required: true });
         const pw2 = reg ? h("input", { type: "password", autocomplete: "new-password", required: true }) : null;
@@ -437,21 +439,23 @@
       const go = h("a", { class: "btn primary block", href: "#/", "aria-disabled": "true" }, t("t_combine_go"));
       const upd = () => { go.href = picks.size ? "#/l/c:" + [...picks].join("+") : "#/"; go.setAttribute("aria-disabled", String(!picks.size)); };
       return h("div", null,
-        h("h1", null, icon("layers"), " ", T.nav.train),
+        h("h1", null, T.nav.train),
         h("p", { class: "lead" }, t("t_intro")),
         accountBox(),
-        dirControl(route),
+        h("div", { class: "train-top" }, dirControl(route)),
         due
-          ? h("a", { class: "card review", href: "#/p/cards/rev", style: "margin-top:1rem" },
-              h("span", { class: "card-icon" }, icon("rotate-ccw")),
-              h("span", { class: "card-body" }, h("strong", null, t("t_review")), h("small", null, t("t_review_sub", { n: due }))))
+          ? h("a", { class: "review", href: "#/p/cards/rev" },
+              h("span", null, h("strong", null, t("t_review")), h("br"), h("small", { class: "muted" }, t("t_review_sub", { n: due }))),
+              h("span", { "aria-hidden": "true" }, "→"))
           : h("p", { class: "muted" }, t("t_review_none")),
         h("h2", null, t("t_lessons")),
-        h("div", { class: "grid" }, d.lessons.map((l) => {
+        h("ol", { class: "lesson-list" }, d.lessons.map((l) => {
           const es = d.entries.filter((e) => e.l === l.id);
-          return h("a", { class: "card", href: "#/l/" + l.id },
-            h("span", { class: "card-icon" }, icon("book-open")),
-            h("span", { class: "card-body" }, h("strong", null, l.name), h("small", null, t("t_words", { n: es.length })), meter(es.filter(known).length, es.length)));
+          const k = es.filter(known).length;
+          return h("li", null, h("a", { href: "#/l/" + l.id },
+            h("span", { class: "ln" }, l.name),
+            h("span", { class: "lm" }, t("t_words", { n: es.length }), " · ", t("t_known", { k, n: es.length })),
+            h("span", { class: "meter-bar" }, h("span", { style: `width:${es.length ? Math.round((k / es.length) * 100) : 0}%` }))));
         })),
         d.lessons.length > 1 ? h("details", { class: "panel combine" },
           h("summary", null, t("t_combine")),
@@ -464,7 +468,7 @@
       const s = selection(sel);
       if (!s) return notFound();
       const mode = (m, ic, title, sub) => h("a", { class: "mode", href: `#/p/${m}/${sel}` },
-        h("span", { class: "card-icon" }, icon(ic)), h("strong", null, title), h("small", null, sub));
+        h("strong", null, title), h("small", null, sub));
       const boxes = (e) => {
         const b = Math.min(...dirs().map((x) => boxOf(e, x)));
         return h("span", { class: "box", title: b ? t("t_box", { b }) : t("t_new") },
@@ -474,7 +478,7 @@
         h("p", { class: "small" }, h("a", { href: "#/" }, "← ", T.nav.train)),
         h("h1", null, s.title),
         meter(s.entries.filter(known).length, s.entries.length),
-        h("div", { style: "margin-top:1rem" }, dirControl(route)),
+        h("div", { class: "train-top" }, dirControl(route)),
         h("div", { class: "modes" },
           mode("cards", "layers", t("t_cards"), t("t_cards_sub")),
           mode("quiz", "list-checks", t("t_quiz"), t("t_quiz_sub")),

@@ -77,9 +77,6 @@ def fmt_date(iso, lang):
     return f"{int(d)} {months[int(m) - 1]} {y}"
 
 
-def todo(ui, text=""):
-    return f'<div class="todo"><b>{esc(ui["todo"])}</b>{(" · " + text) if text else ""}</div>'
-
 
 class Builder:
     def __init__(self, site_data):
@@ -109,8 +106,9 @@ class Builder:
     def page(self, lang, key, title, body, extra_head=""):
         ui = self.ui[lang]
         nav = "".join(
-            f'<a href="{url(lang, k)}"{CUR_PAGE if k == key else ""}>{icon(ic)}<span>{esc(ui["nav"][k])}</span></a>'
+            f'<a href="{url(lang, k)}"{CUR_PAGE if k == key else ""}>{esc(ui["nav"][k])}</a>'
             for k, _, ic in PAGES)
+        first, _, rest = ui["site_name"].partition(" ")
         switch = " ".join(
             f'<a href="{url(l, key)}" hreflang="{l}" lang="{l}" data-lang="{l}"{CUR_LANG if l == lang else ""}>{l.upper()}</a>'
             for l in LANGS)
@@ -129,7 +127,8 @@ class Builder:
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{full_title}</title>
 <meta name="description" content="{esc(ui['site_desc'])}">
-<meta name="theme-color" content="#7a3b12">
+<meta name="theme-color" content="#fbf8f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171310" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="preload" href="/assets/fonts/AniiWeb-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -138,11 +137,13 @@ class Builder:
 </head>
 <body>
 <a class="skip" href="#main">{esc(ui['skip'])}</a>
-<header class="topbar">
-  <a class="brand" href="{url(lang, 'start')}"><img src="/icon.svg" alt="" width="30" height="30"><span>{esc(ui['site_name'])}</span></a>
-  <nav class="langs" aria-label="Langue / Sprache">{switch}</nav>
+<header class="site-head">
+  <div class="head-inner">
+    <a class="wordmark" href="{url(lang, 'start')}"><b>{esc(first)}</b><span>{esc(rest)}</span></a>
+    <nav class="langs" aria-label="Langue / Sprache">{switch}</nav>
+  </div>
 </header>
-<nav class="tabs" aria-label="Navigation">{nav}</nav>
+<nav class="site-nav" aria-label="Navigation"><div class="site-nav-inner">{nav}</div></nav>
 <main id="main" class="wrap">
 {body}
 </main>
@@ -168,21 +169,22 @@ class Builder:
             "n_entries": str(len(self.data["entries"])),
             "n_lessons": str(len(self.data["lessons"])),
             "n_checked": str(sum(1 for e in self.data["entries"] if e.get("ok"))),
-            "todo": todo(ui),
             "speakers": self.speakers(lang),
             "downloads": self.downloads(lang),
         }
         for k, _, _ in PAGES:
             repl["url_" + k] = url(lang, k)
-        text = re.sub(r"\{\{todo:([^}]*)\}\}", lambda m: todo(ui, m.group(1)), text)
         text = re.sub(r"\{\{icon:([a-z0-9-]+)\}\}", lambda m: icon(m.group(1)), text)
         return re.sub(r"\{\{(\w+)\}\}", lambda m: repl.get(m.group(1), m.group(0)), text)
 
     def speakers(self, lang):
         sp = self.data["speakers"]
         if not sp:
-            return todo(self.ui[lang], "aucune voix enregistrée pour l’instant" if lang == "fr" else "noch keine Aufnahmen")
-        return "<ul>" + "".join(f"<li>{esc(s['name'])}{' (' + esc(s['ort']) + ')' if s['ort'] else ''}</li>" for s in sp) + "</ul>"
+            return ""  # Abschnitt erscheint erst, wenn es Aufnahmen mit Zustimmung gibt
+        fr = lang == "fr"
+        head = ("<h2>Voix</h2><p>Les enregistrements ne sont publiés qu’avec l’accord des personnes enregistrées.</p>" if fr
+                else "<h2>Stimmen</h2><p>Aufnahmen werden nur mit Zustimmung der aufgenommenen Personen veröffentlicht.</p>")
+        return head + "<ul>" + "".join(f"<li>{esc(s['name'])}{' (' + esc(s['ort']) + ')' if s['ort'] else ''}</li>" for s in sp) + "</ul>"
 
     def downloads(self, lang):
         items = [("anii-vokabeln.csv", "CSV (Excel, LibreOffice)"), ("anii-vokabeln.json", "JSON"), ("anii.apkg", "Anki")]
@@ -191,7 +193,7 @@ class Builder:
             p = DIST / "telechargement" / f
             if p.exists():
                 kb = max(1, round(p.stat().st_size / 1024))
-                out.append(f'<li><a href="/telechargement/{f}" download>{icon("download")} {esc(label)}</a> <small class="muted">{f}, {kb} KB</small></li>')
+                out.append(f'<li><a href="/telechargement/{f}" download>{esc(label)}</a> <small class="muted">{f}, {kb} KB</small></li>')
         return '<ul class="downloads">' + "".join(out) + "</ul>"
 
     # ---------------------------------------------------------- Seiten
@@ -203,7 +205,7 @@ class Builder:
             self.write(lang, "langue", n["langue"], self.content(lang, "langue"))
             self.write(lang, "alphabet", n["alphabet"], self.alphabet(lang))
             self.write(lang, "dict", n["dict"],
-                       f'<h1>{icon("book-open")} {esc(n["dict"])}</h1><div id="app" data-app="dict"><p class="loading">{esc(ui["loading"])}</p></div>'
+                       f'<h1>{esc(n["dict"])}</h1><div id="app" data-app="dict"><p class="loading">{esc(ui["loading"])}</p></div>'
                        '<noscript><p>JavaScript est nécessaire pour la recherche. / Für die Suche wird JavaScript benötigt. '
                        '<a href="/telechargement/anii-vokabeln.csv">CSV</a></p></noscript>')
             self.write(lang, "train", n["train"],
@@ -215,12 +217,11 @@ class Builder:
 
     def start(self, lang):
         ui = self.ui[lang]
-        cards = []
-        for key, _, ic in PAGES[1:]:
-            sub = self.content_snippet(lang, key)
-            cards.append(f'<a class="card" href="{url(lang, key)}"><span class="card-icon">{icon(ic)}</span>'
-                         f'<span class="card-body"><strong>{esc(ui["nav"][key])}</strong><small>{esc(sub)}</small></span></a>')
-        return self.content(lang, "start").replace("{{cards}}", '<div class="grid">' + "".join(cards) + "</div>")
+        items = []
+        for key, _, _ in PAGES[1:]:
+            items.append(f'<li><a href="{url(lang, key)}"><span class="t">{esc(ui["nav"][key])}</span>'
+                         f'<span class="d">{esc(self.content_snippet(lang, key))}</span><span class="arr" aria-hidden="true">→</span></a></li>')
+        return self.content(lang, "start").replace("{{cards}}", '<ul class="toc">' + "".join(items) + "</ul>")
 
     def content_snippet(self, lang, key):
         d = self.data
@@ -230,9 +231,9 @@ class Builder:
                      else f"{len(d['entries'])} Wörter · Suche auf Anii, Französisch, Deutsch"),
             "train": (f"{len(d['lessons'])} leçons · cartes, quiz, écriture" if fr
                       else f"{len(d['lessons'])} Lektionen · Karteikarten, Quiz, Schreiben"),
-            "alphabet": "31 lettres, prononciation" if fr else "31 Buchstaben, Aussprache",
+            "alphabet": "Les 31 lettres et leur ordre" if fr else "Die 31 Buchstaben und ihre Reihenfolge",
             "langue": "Origine, dialectes, écriture" if fr else "Herkunft, Dialekte, Schrift",
-            "sources": "Littérature, voix, licence, téléchargements" if fr else "Literatur, Stimmen, Lizenz, Downloads",
+            "sources": "Littérature, licence, téléchargements" if fr else "Literatur, Lizenz, Downloads",
             "participer": "Corriger, ajouter, enregistrer" if fr else "Korrigieren, ergänzen, aufnehmen",
         }[key]
 
@@ -245,14 +246,14 @@ class Builder:
                 tr = ex.get(lang) or ex.get("fr") or ex.get("de") or ""
                 ex_html = f'<a class="tile-ex" href="{url(lang, "dict")}#{ex["id"]}"><b>{esc(ex["a"])}</b> <small>{esc(tr)}</small></a>'
             else:
-                ex_html = f'<span class="tile-ex ph">{esc(ui["todo"])}: {"exemple" if lang == "fr" else "Beispielwort"}</span>'
+                ex_html = ""
             if t.get("au"):
                 au = f'<button class="speak" type="button" data-audio="/audio/{esc(t["au"])}" aria-label="{esc(ui["play"])} {esc(t["l"])}">{icon("volume-2")}</button>'
             else:
-                au = f'<span class="speak off" title="{esc(ui["no_audio"])}" aria-label="{esc(ui["no_audio"])}">{icon("mic")}</span>'
+                au = ""
             note = t.get("p" + lang)
-            note_html = f'<p class="tile-note">{esc(note)}</p>' if note else f'<p class="tile-note ph">{esc(ui["todo"])}: {"prononciation" if lang == "fr" else "Aussprache"}</p>'
-            tiles.append(f'<li class="tile" id="l-{esc(anii.slug(t["l"]) or t["l"])}"><div class="tile-head"><span class="tile-letter" lang="blo">{esc(t["u"])} {esc(t["l"])}</span>{au}</div>{ex_html}{note_html}</li>')
+            note_html = f'<p class="tile-note">{esc(note)}</p>' if note else ""
+            tiles.append(f'<li class="tile" id="l-{esc(anii.slug(t["l"]) or t["l"])}"><div class="tile-head"><span class="tile-letter" lang="blo">{esc(t["u"])}<span class="lc">{esc(t["l"])}</span></span>{au}</div>{ex_html}{note_html}</li>')
         return self.content(lang, "alphabet").replace("{{tiles}}", '<ul class="tiles">' + "".join(tiles) + "</ul>")
 
     def root_page(self):
