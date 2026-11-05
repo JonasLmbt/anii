@@ -94,6 +94,7 @@
     app.replaceChildren(
       h("div", { class: "bar" },
         h("button", { class: "btn primary", type: "button", onclick: () => viewForm(null) }, "+ Neues Wort"),
+        h("button", { class: "btn", type: "button", onclick: () => viewTable() }, "Tabelle"),
         h("button", { class: "btn", type: "button", onclick: viewSpeakers }, "Sprecher"),
         h("button", { class: "linkish", style: "margin:0 0 0 auto", type: "button", onclick: async () => { await api("logout", {}); viewLogin(); } }, "Abmelden")),
       status,
@@ -283,6 +284,139 @@
 
     box.append(current, h("div", { class: "rec", style: "margin-top:.6rem" }, recBtn, h("span", { class: "muted small" }, "oder Datei:"), file), preview, hint);
     return box;
+  }
+
+  // ------------------------------------------------------------ Tabelle (wie Excel)
+  const TCOLS = [
+    ["anii", "Anii", 11, true], ["francais", "Français", 13], ["deutsch", "Deutsch", 13], ["lektion", "Lektion", 12],
+    ["plural", "Plural", 9, true], ["beispiel", "Beispiel", 12, true], ["notiz", "Anmerkung", 18, true],
+    ["quelle", "Quelle", 7], ["datum", "Datum", 8.5],
+  ];
+  let dirty = new Map(); // key -> {id, fields}
+  window.addEventListener("beforeunload", (ev) => { if (dirty.size) { ev.preventDefault(); ev.returnValue = ""; } });
+
+  function viewTable(keepFilter) {
+    const d = S.data;
+    if (!keepFilter) dirty = new Map();
+    const lessonOrder = (l) => { const i = d.lessons.indexOf(l); return i < 0 ? 999 : i; };
+    const rows = d.entries.slice().sort((a, b) => lessonOrder(a.lektion) - lessonOrder(b.lektion) || a.id.localeCompare(b.id));
+    const sel = h("select", null, h("option", { value: "" }, "Alle Lektionen"), d.lessons.map((l) => h("option", { value: l, selected: l === S.lesson }, l)));
+    const q = h("input", { type: "search", placeholder: "Filtern", value: S.q, autocomplete: "off", spellcheck: "false" });
+    const tbody = h("tbody");
+    const saveBtn = h("button", { class: "btn primary", type: "button", disabled: true }, "Speichern");
+    const info = h("span", { class: "small muted" });
+    let newCount = 0;
+
+    function updSave() {
+      saveBtn.disabled = !dirty.size;
+      saveBtn.textContent = dirty.size ? `Speichern (${dirty.size})` : "Speichern";
+      info.textContent = dirty.size ? "ungespeicherte Änderungen" : "";
+    }
+    function rowEl(e, key) {
+      const tr = h("tr", { "data-key": key });
+      tr.append(h("td", { class: "tid" }, e.id ? h("a", { href: "#", title: "Formular öffnen (Audio, Sprecher, Löschen)", onclick: (ev) => {
+        ev.preventDefault();
+        if (dirty.size && !confirm("Ungespeicherte Änderungen in der Tabelle verwerfen?")) return;
+        dirty = new Map();
+        viewForm(d.entries.find((x) => x.id === e.id));
+      } }, e.id) : h("span", { class: "muted" }, "neu")));
+      for (const [col, , , isAnii] of TCOLS) {
+        const inp = h("input", { value: e[col] || "", "data-col": col, list: col === "lektion" ? "t-lessons" : null,
+          lang: isAnii ? "blo" : null, spellcheck: isAnii ? "false" : null, autocomplete: "off", autocapitalize: "off" });
+        if (isAnii) inp.addEventListener("focus", () => { S.lastField = inp; });
+        inp.addEventListener("input", () => {
+          const entry = dirty.get(key) || { id: e.id, key, fields: {} };
+          entry.fields[col] = inp.value;
+          dirty.set(key, entry);
+          tr.classList.add("dirty");
+          updSave();
+        });
+        tr.append(h("td", null, inp));
+      }
+      const ok = h("input", { type: "checkbox", checked: e.geprueft === "ja", title: "Herkunft geprüft" });
+      ok.addEventListener("change", () => {
+        const entry = dirty.get(key) || { id: e.id, key, fields: {} };
+        entry.fields.geprueft = ok.checked ? "ja" : "nein";
+        dirty.set(key, entry);
+        tr.classList.add("dirty");
+        updSave();
+      });
+      tr.append(h("td", { class: "tc" }, ok), h("td", { class: "tc" }, e._audio ? "🔊" : ""));
+      return tr;
+    }
+    function render() {
+      const f = fold(S.q.trim());
+      tbody.replaceChildren(...rows.filter((e) => (!S.lesson || e.lektion === S.lesson) &&
+        (!f || fold([e.id, e.anii, e.francais, e.deutsch, e.notiz].join(" ")).includes(f))).map((e) => rowEl(e, e.id)));
+    }
+    function addRow() {
+      const key = "neu" + ++newCount;
+      const today = new Date().toISOString().slice(0, 10);
+      const e = { id: "", lektion: S.lesson || remember.get("lektion", ""), quelle: remember.get("quelle", ""), datum: today, geprueft: "nein" };
+      const tr = rowEl(e, key);
+      tr.classList.add("dirty", "new");
+      dirty.set(key, { id: "", key, fields: { lektion: e.lektion, quelle: e.quelle, datum: today, dialekt: "Balanka" } });
+      tbody.append(tr);
+      updSave();
+      tr.querySelector("input").focus();
+    }
+    async function save() {
+      saveBtn.disabled = true;
+      tbody.querySelectorAll(".msgrow").forEach((x) => x.remove());
+      tbody.querySelectorAll("tr.err").forEach((x) => x.classList.remove("err"));
+      try {
+        const r = await api("save-many", { rows: [...dirty.values()] });
+        if (r.status === 422) {
+          for (const [key, msgs] of Object.entries(r.messages || {})) {
+            const tr = tbody.querySelector(`tr[data-key="${CSS.escape(key)}"]`);
+            if (!tr || !msgs.length) continue;
+            if (r.errors && r.errors[key]) tr.classList.add("err");
+            tr.after(h("tr", { class: "msgrow" }, h("td", { colspan: String(TCOLS.length + 3) },
+              h("ul", { class: "msgs" }, msgs.map((m) => h("li", { class: m.level }, m.msg))))));
+          }
+          toast(`Nicht gespeichert – ${Object.keys(r.errors).length} Zeile(n) mit Fehlern (rot).`, true);
+          updSave();
+          return;
+        }
+        const last = [...dirty.values()].pop();
+        if (last && last.fields.lektion) remember.set("lektion", last.fields.lektion);
+        if (last && last.fields.quelle) remember.set("quelle", last.fields.quelle);
+        const warn = Object.values(r.messages || {}).flat().filter((m) => m.level === "WARNUNG").length;
+        toast(`${Object.keys(r.ids).length} Zeile(n) gespeichert. ` + pushNote(r.push) + (warn ? ` ${warn} Warnung(en) – siehe Formular.` : ""),
+          r.push !== "ok" && r.push !== "keine Änderung");
+        dirty = new Map();
+        await load();
+        viewTable(true);
+      } catch (err) {
+        toast(err.message, true);
+        updSave();
+      }
+    }
+    saveBtn.addEventListener("click", save);
+    q.addEventListener("input", () => { S.q = q.value; render(); });
+    sel.addEventListener("change", () => { S.lesson = sel.value; render(); });
+
+    app.replaceChildren(
+      h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => {
+        ev.preventDefault();
+        if (dirty.size && !confirm("Ungespeicherte Änderungen verwerfen?")) return;
+        dirty = new Map(); viewList();
+      } }, "← Liste")),
+      h("h1", null, "Tabelle"),
+      h("p", { class: "muted small" }, "Zellen direkt bearbeiten, neue Zeilen unten anfügen, dann „Speichern“. Neue Wörter bekommen beim Speichern automatisch die nächste ID. Für Aufnahmen, Sprecher oder Löschen auf die ID klicken."),
+      h("div", { class: "bar" }, q, sel),
+      h("datalist", { id: "t-lessons" }, d.lessons.map((l) => h("option", { value: l }))),
+      h("div", { class: "table-wrap" }, h("table", { class: "grid-table" },
+        h("colgroup", null, h("col", { style: "width:4.5rem" }), TCOLS.map(([, , w]) => h("col", { style: `width:${w}rem` })), h("col", { style: "width:2.5rem" }), h("col", { style: "width:2rem" })),
+        h("thead", null, h("tr", null, h("th", null, "ID"), TCOLS.map(([, label]) => h("th", null, label)), h("th", { title: "Herkunft geprüft" }, "✓"), h("th", { title: "Aufnahme" }, "🔊"))),
+        tbody)),
+      h("div", { class: "table-actions" },
+        h("button", { class: "btn", type: "button", onclick: addRow }, "+ Zeile"),
+        h("button", { class: "btn", type: "button", onclick: () => { for (let i = 0; i < 5; i++) addRow(); } }, "+ 5 Zeilen"),
+        saveBtn, info),
+      keyDock());
+    render();
+    updSave();
   }
 
   // ------------------------------------------------------------ Sprecher

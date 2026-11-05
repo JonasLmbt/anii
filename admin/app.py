@@ -266,6 +266,88 @@ def api_save(p):
         return 200, {"id": e["id"], "messages": msgs, "push": status}
 
 
+def normalize_fields(fields):
+    """Nur die übergebenen Felder bereinigen (Tabellen-Ansicht schickt nicht alle Spalten)."""
+    out = {}
+    for c, v in fields.items():
+        if c not in bd.COLUMNS or c in ("id", "audio"):
+            continue  # ID und Audio ändert die Tabelle nicht
+        v = clean(v)
+        if c == "datum":
+            m = re.match(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$", v)
+            if m:
+                v = f"{m.group(3)}-{int(m.group(2)):02d}-{int(m.group(1)):02d}"
+        if c == "geprueft":
+            v = "ja" if v.lower() in ("ja", "true", "1", "on", "oui") else "nein"
+        out[c] = v
+    return out
+
+
+def messages_by_line(header, rows):
+    report = bd.Report()
+    bd.validate(header, [dict(r) for r in rows], report)
+    by = {}
+    for level, where, msg in report.items:
+        if "„geprueft“ leer" in msg:
+            continue
+        if where.startswith("Zeilen "):
+            nums = [int(x) for x in re.findall(r"\d+", where)]
+        else:
+            m = re.match(r"Zeile (\d+)", where)
+            nums = [int(m.group(1))] if m else []
+        for n in nums:
+            by.setdefault(n, []).append({"level": level, "msg": msg})
+    return by
+
+
+def api_save_many(p):
+    """Tabellen-Ansicht: mehrere geänderte oder neue Zeilen in einem Commit speichern."""
+    items = p.get("rows") or []
+    if not isinstance(items, list) or not items:
+        raise ValueError("Keine Änderungen")
+    if len(items) > 500:
+        raise ValueError("Höchstens 500 Zeilen auf einmal")
+    with LOCK:
+        sync()
+        header, rows, bom = load_vocab()
+        index = {r["id"]: i for i, r in enumerate(rows)}
+        nxt = int(next_id(rows)[1:])
+        keys, n_new, n_changed = {}, 0, 0
+        for it in items:
+            key = str(it.get("key") or it.get("id") or "")
+            fields = normalize_fields(it.get("fields") or {})
+            eid = clean(it.get("id", ""))
+            if eid:
+                if eid not in index:
+                    raise LookupError(f"ID {eid} gibt es nicht (mehr) – bitte neu laden")
+                rows[index[eid]].update(fields)
+                n_changed += 1
+            else:
+                if not any(fields.get(c) for c in ("anii", "francais", "deutsch")):
+                    continue  # leere neue Zeile
+                e = {c: "" for c in header}
+                e.update({"dialekt": "Balanka", "geprueft": "nein"})
+                e.update(fields)
+                eid = f"w{nxt:04d}"
+                nxt += 1
+                e["id"] = eid
+                rows.append(e)
+                index[eid] = len(rows) - 1
+                n_new += 1
+            keys[key] = eid
+        msgs = messages_by_line(header, rows)
+        result = {k: msgs.get(index[eid] + 2, []) for k, eid in keys.items()}
+        errors = {k: m for k, m in result.items() if any(x["level"] == "FEHLER" for x in m)}
+        if errors:
+            return 422, {"errors": errors, "messages": result}
+        if not keys:
+            return 200, {"ids": {}, "messages": {}, "push": "keine Änderung"}
+        bd.write_csv(CSV_FILE, header, rows, bom)
+        parts = [f"{n_new} neu" if n_new else "", f"{n_changed} geändert" if n_changed else ""]
+        status = commit("Editor (Tabelle): " + ", ".join(x for x in parts if x), ["data/vokabeln.csv"])
+        return 200, {"ids": keys, "messages": result, "push": status}
+
+
 def api_delete(p):
     with LOCK:
         sync()
@@ -461,6 +543,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         actions = {
             "/admin/api/check": lambda: (200, api_check(p)),
             "/admin/api/save": lambda: api_save(p),
+            "/admin/api/save-many": lambda: api_save_many(p),
             "/admin/api/delete": lambda: api_delete(p),
             "/admin/api/audio-delete": lambda: api_audio_delete(p),
             "/admin/api/speaker": lambda: api_speaker(p),

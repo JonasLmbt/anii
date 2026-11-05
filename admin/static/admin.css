@@ -46,3 +46,23 @@ fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding:
 legend { font-weight: 700; padding: 0 .3rem; }
 .row-check { display: flex; align-items: center; gap: .5rem; font-weight: 600; margin: .6rem 0; }
 .row-check input { width: auto; }
+
+/* ---------- Tabellen-Ansicht ---------- */
+main.wrap:has(.grid-table) { max-width: 1400px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.grid-table { border-collapse: collapse; table-layout: fixed; min-width: 100%; width: max-content; font-size: .92rem; }
+.grid-table th { position: sticky; top: 0; background: var(--brand-soft); color: var(--ink); text-align: left; font-weight: 700; padding: .35rem .4rem; border-bottom: 1px solid var(--line); }
+.grid-table td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 0; vertical-align: top; }
+.grid-table td input:not([type="checkbox"]) {
+  border: 0; border-radius: 0; background: transparent; width: 100%; padding: .4rem .45rem; font-size: .92rem;
+}
+.grid-table td input:focus { outline: 2px solid var(--brand); outline-offset: -2px; background: var(--bg); }
+.grid-table td input[lang="blo"] { font-weight: 700; }
+.grid-table .tid { padding: .4rem .45rem; font-size: .8rem; white-space: nowrap; }
+.grid-table .tc { text-align: center; padding: .35rem 0; }
+.grid-table .tc input { width: auto; }
+.grid-table tr.dirty td { background: var(--todo); }
+.grid-table tr.err td { background: var(--bad-soft); }
+.grid-table .msgrow td { background: var(--surface); padding: .2rem .6rem; }
+.grid-table .msgrow .msgs { margin: .2rem 0; }
+.table-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .8rem 0 1rem; }
