@@ -210,7 +210,7 @@
         h("div", { class: "meta" },
           meta,
           e.ok ? h("span", { class: "badge ok" }, "✓ ", t("d_checked")) : h("span", { class: "badge no" }, t("d_unchecked")),
-          h("a", { class: "correct", href: T.urls.participer + "#" + e.id }, t("d_correct"))));
+          T.urls.participer ? h("a", { class: "correct", href: T.urls.participer + "#" + e.id }, t("d_correct")) : null));
     }
 
     function render() {

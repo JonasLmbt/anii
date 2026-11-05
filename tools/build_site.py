@@ -38,6 +38,9 @@ PAGES = [
     ("participer", {"fr": "participer", "de": "mitmachen"}, "hand-heart"),
 ]
 JS_PAGES = {"dict", "train", "participer"}
+# Vorübergehend ausgeblendete Seiten: nicht gebaut, nicht verlinkt. Zum Einblenden einfach entfernen.
+HIDDEN = {"participer"}
+VISIBLE = [p for p in PAGES if p[0] not in HIDDEN]
 CUR_PAGE = ' aria-current="page"'
 CUR_LANG = ' aria-current="true"'
 ICONS = json.loads((ROOT / "tools" / "icons.json").read_text(encoding="utf-8"))
@@ -107,7 +110,7 @@ class Builder:
         ui = self.ui[lang]
         nav = "".join(
             f'<a href="{url(lang, k)}"{CUR_PAGE if k == key else ""}>{esc(ui["nav"][k])}</a>'
-            for k, _, ic in PAGES)
+            for k, _, ic in VISIBLE)
         first, _, rest = ui["site_name"].partition(" ")
         switch = " ".join(
             f'<a href="{url(l, key)}" hreflang="{l}" lang="{l}" data-lang="{l}"{CUR_LANG if l == lang else ""}>{l.upper()}</a>'
@@ -115,7 +118,7 @@ class Builder:
         alternates = "".join(f'<link rel="alternate" hreflang="{l}" href="{url(l, key)}">' for l in LANGS)
         scripts = ""
         if key in JS_PAGES:
-            ui_json = json.dumps(dict(ui, urls={k: url(lang, k) for k, _, _ in PAGES}), ensure_ascii=False).replace("</", "<\\/")
+            ui_json = json.dumps(dict(ui, urls={k: url(lang, k) for k, _, _ in VISIBLE}), ensure_ascii=False).replace("</", "<\\/")
             scripts = (f'<script type="application/json" id="ui">{ui_json}</script>'
                        f'<script src="{self.asset("icons.js")}" defer></script>')
         scripts += f'<script src="{self.asset("app.js")}" defer></script>'
@@ -211,14 +214,15 @@ class Builder:
             self.write(lang, "train", n["train"],
                        f'<div id="app" data-app="train"><p class="loading">{esc(ui["loading"])}</p></div>')
             self.write(lang, "sources", n["sources"], self.content(lang, "sources"))
-            self.write(lang, "participer", n["participer"], self.content(lang, "participer"))
+            if "participer" not in HIDDEN:
+                self.write(lang, "participer", n["participer"], self.content(lang, "participer"))
         self.root_page()
         self.not_found()
 
     def start(self, lang):
         ui = self.ui[lang]
         items = []
-        for key, _, _ in PAGES[1:]:
+        for key, _, _ in VISIBLE[1:]:
             items.append(f'<li><a href="{url(lang, key)}"><span class="t">{esc(ui["nav"][key])}</span>'
                          f'<span class="d">{esc(self.content_snippet(lang, key))}</span><span class="arr" aria-hidden="true">→</span></a></li>')
         return self.content(lang, "start").replace("{{cards}}", '<ul class="toc">' + "".join(items) + "</ul>")

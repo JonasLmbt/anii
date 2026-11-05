@@ -1,163 +1,163 @@
 id;anii;deutsch;francais;lektion;plural;beispiel;dialekt;quelle;datum;audio;sprecher;geprueft;notiz
-w0001;Magala;Guten Morgen;Bonjour;1 · Salutations;Magalama;;Balanka;Karim;2026-09-30;;;nein;Salutation du matin (de 4 h à 11 h).
-w0002;Mufile;Guten Mittag;Bon midi;1 · Salutations;Mufilema;;Balanka;Karim;2026-09-30;;;nein;Salutation de midi (de 12 h à 15 h).
-w0003;Gitoonfile;Guten Abend;Bonsoir;1 · Salutations;Gitoonfilema;;Balanka;Karim;2026-09-30;;;nein;Salutation du soir (de 15 h à 23 h).
-w0004;Magasana;Willkommen;Bonne arrivée;1 · Salutations;Magasanama;;Balanka;Karim;2026-09-30;;;nein;Réponse : « ee ».
-w0005;Gafalafe?;Und zu Hause?;Et la maison ?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;Réponse : « alafɩa ».
-w0006;alafɩa;die Gesundheit;la santé;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;
-w0090;Kookarife?;Und die Müdigkeit?;Et la fatigue ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;nein;Réponse : « alafɩa ».
-w0091;Boopife?;Und die Kinder?;Et les enfants ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;nein;Réponse : « alafɩa ».
-w0092;Ntomafe?;Und die Arbeit?;Et le travail ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;nein;Réponse : « alafɩa ».
-w0065;ulǝǝsee;die Arbeit?;le travail ?;1 · Salutations;ilǝǝsee;;Balanka;Karim;2026-10-08;;;nein;Souvent employé comme question : « Comment s'est passé le travail ? ». Réponse : « gikooma » (grâce à Dieu).
-w0093;mpɩmasogonyɩ;ich bin gekommen, um dich zu begrüßen;je suis venu pour te saluer;1 · Salutations;;;Balanka;Karim;2026-10-21;;;nein;
-w0007;Minǝbayitɔɔ?;Wie heißt du?;Comment tu t'appelles ?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;Réponse : « ntane … » (je m'appelle …).
-w0008;ntane;ich heiße;je m'appelle;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;
-w0013;Bulǝsee;auf Wiedersehen / bis später;au revoir / à plus tard;1 · Salutations;Bulǝseema;;Balanka;Karim;2026-09-30;;;nein;"Se dit quand on se revoit le même jour ; sinon on dit « Bupǝragǝsǝŋ »."
-w0014;cɔɔpɩ;geh und komm wieder;aller revenir;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;Se dit à quelqu'un qui s'en va.
-w0015;Bupǝragǝsǝŋ;bis morgen;à demain;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;
-w0016;Buruku naŋǝrǝtu;Gute Nacht;Bonne nuit;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;Littéralement : « Que Dieu fasse que tu te réveilles sain et sauf. »
-w0018;Mantǝma;gute Arbeit / danke;Bon travail / merci;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;
-w0019;bunǝma;es ist gut;c'est bon;1 · Salutations;;;Balanka;Karim;2026-09-30;;;nein;
-w0009;Areenaʊtee?;Wohin gehst du?;Où vas-tu ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;nein;
-w0010;mdɔbǝ;ich gehe hinaus;je sors;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;nein;
-w0011;ntee guya;ich gehe zum Markt;je vais au marché;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;nein;
-w0012;ntee awaraka;ich gehe aufs Feld;je vais au champ;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;nein;
-w0066;gitee;los geht's / gehen wir;on y va / allons-y;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;nein;
-w0063;afalaka;zu Hause;à la maison;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;nein;
-w0064;basana;ein Fremder / eine Fremde;un étranger / une étrangère;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;nein;
+w0001;Magala;Guten Morgen;Bonjour;1 · Salutations;Magalama;;Balanka;Karim;2026-09-30;;;ja;Salutation du matin (de 4 h à 11 h).
+w0002;Mufile;Guten Mittag;Bon midi;1 · Salutations;Mufilema;;Balanka;Karim;2026-09-30;;;ja;Salutation de midi (de 12 h à 15 h).
+w0003;Gitoonfile;Guten Abend;Bonsoir;1 · Salutations;Gitoonfilema;;Balanka;Karim;2026-09-30;;;ja;Salutation du soir (de 15 h à 23 h).
+w0004;Magasana;Willkommen;Bonne arrivée;1 · Salutations;Magasanama;;Balanka;Karim;2026-09-30;;;ja;Réponse : « ee ».
+w0005;Gafalafe?;Und zu Hause?;Et la maison ?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;Réponse : « alafɩa ».
+w0006;alafɩa;die Gesundheit;la santé;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;
+w0090;Kookarife?;Und die Müdigkeit?;Et la fatigue ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;ja;Réponse : « alafɩa ».
+w0091;Boopife?;Und die Kinder?;Et les enfants ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;ja;Réponse : « alafɩa ».
+w0092;Ntomafe?;Und die Arbeit?;Et le travail ?;1 · Salutations;;;Balanka;Karim;2026-10-21;;;ja;Réponse : « alafɩa ».
+w0065;ulǝǝsee;die Arbeit?;le travail ?;1 · Salutations;ilǝǝsee;;Balanka;Karim;2026-10-08;;;ja;Souvent employé comme question : « Comment s'est passé le travail ? ». Réponse : « gikooma » (grâce à Dieu).
+w0093;mpɩmasogonyɩ;ich bin gekommen, um dich zu begrüßen;je suis venu pour te saluer;1 · Salutations;;;Balanka;Karim;2026-10-21;;;ja;
+w0007;Minǝbayitɔɔ?;Wie heißt du?;Comment tu t'appelles ?;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;Réponse : « ntane … » (je m'appelle …).
+w0008;ntane;ich heiße;je m'appelle;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;
+w0013;Bulǝsee;auf Wiedersehen / bis später;au revoir / à plus tard;1 · Salutations;Bulǝseema;;Balanka;Karim;2026-09-30;;;ja;"Se dit quand on se revoit le même jour ; sinon on dit « Bupǝragǝsǝŋ »."
+w0014;cɔɔpɩ;geh und komm wieder;aller revenir;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;Se dit à quelqu'un qui s'en va.
+w0015;Bupǝragǝsǝŋ;bis morgen;à demain;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;
+w0016;Buruku naŋǝrǝtu;Gute Nacht;Bonne nuit;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;Littéralement : « Que Dieu fasse que tu te réveilles sain et sauf. »
+w0018;Mantǝma;gute Arbeit / danke;Bon travail / merci;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;
+w0019;bunǝma;es ist gut;c'est bon;1 · Salutations;;;Balanka;Karim;2026-09-30;;;ja;
+w0009;Areenaʊtee?;Wohin gehst du?;Où vas-tu ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;ja;
+w0010;mdɔbǝ;ich gehe hinaus;je sors;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;ja;
+w0011;ntee guya;ich gehe zum Markt;je vais au marché;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;ja;
+w0012;ntee awaraka;ich gehe aufs Feld;je vais au champ;2 · Questions et phrases utiles;;;Balanka;Karim;2026-09-30;;;ja;
+w0066;gitee;los geht's / gehen wir;on y va / allons-y;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;ja;
+w0063;afalaka;zu Hause;à la maison;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;ja;
+w0064;basana;ein Fremder / eine Fremde;un étranger / une étrangère;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-08;;;ja;
 w0067;bokom;ich bin müde;je suis fatigué(e);2 · Questions et phrases utiles;;;Balanka;;2026-10-08;;;nein;
 w0068;angola;ich bin krank;je suis malade;2 · Questions et phrases utiles;;;Balanka;;2026-10-08;;;nein;
 w0069;akomma kabam;ich habe Hunger;j'ai faim;2 · Questions et phrases utiles;;;Balanka;;2026-10-08;;;nein;
 w0070;unyandou kabam;ich habe Durst;j'ai soif;2 · Questions et phrases utiles;;;Balanka;;2026-10-08;;;nein;
-w0094;nwara;ich suche;je cherche;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;nein;
-w0095;aŋunǝ uwara?;Wen suchst du?;Tu cherches qui ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;nein;
-w0096;mɩnakɔ uwara?;Was suchst du?;Tu cherches quoi ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;nein;
-w0097;asiga;gib mir / bring;donne-moi / amène;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;nein;
-w0020;ama;ich (bin);je (suis);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0021;owo;du (bist);tu (es);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0022;are;er / sie (ist);il / elle (est);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0023;atʊ;wir (sind) / zusammen;nous (sommes) / ensemble;3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0024;bare;ihr (seid);vous (êtes);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0025;bibi;sie (sind);ils / elles (sont);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;nein;
-w0026;gikubula;der Morgen;le matin;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0027;gifisoono;der Mittag;le midi;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0028;gitoonfile;der Abend;le soir;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0029;anakǝru;der Mond;la lune;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0030;ufile;die Sonne;le soleil;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0039;ŋdǝŋ;heute;aujourd'hui;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0040;galaa;gestern;hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0041;gǝsaŋ;morgen;demain;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0042;gasala;vorgestern;avant-hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0043;gǝsaŋ makǝm;übermorgen;après-demain;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0044;gasala makǝm;vorvorgestern;avant-avant-hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;nein;
-w0031;aditɛɛnɛ;Montag;lundi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0032;atalaata;Dienstag;mardi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0033;alaarba;Mittwoch;mercredi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0034;alaamisi;Donnerstag;jeudi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0035;arisǝma;Freitag;vendredi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0036;asiibi;Samstag;samedi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0037;lahadi;Sonntag;dimanche;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0038;ifile ikɔɔli;sieben Tage;sept jours;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;nein;
-w0098;ndi;der Kopf;la tête;6 · Le corps;ari;;Balanka;Karim;2026-11-05;;;nein;
-w0099;gutuwa;das Ohr;l'oreille;6 · Le corps;atuwa;;Balanka;Karim;2026-11-05;;;nein;
-w0100;ginyinǝ;das Auge;l'œil;6 · Le corps;inyinǝ;;Balanka;Karim;2026-11-05;;;nein;
-w0101;giŋunu;die Nase;le nez;6 · Le corps;iŋunu;;Balanka;Karim;2026-11-05;;;nein;
-w0102;ganu;der Mund;la bouche;6 · Le corps;bunu;;Balanka;Karim;2026-11-05;;;nein;
-w0103;gunyuwa;der Zahn;la dent;6 · Le corps;anyuwa;;Balanka;Karim;2026-11-05;;;nein;
-w0104;gilɛlu;die Zunge;la langue;6 · Le corps;ɩlɛlu;;Balanka;Karim;2026-11-05;;;nein;La langue dans la bouche (l'organe).
-w0105;garara;das Kinn;le menton;6 · Le corps;burara;;Balanka;Karim;2026-11-05;;;nein;
-w0106;umunǝ;der Hals;le cou;6 · Le corps;ɩmunǝ;;Balanka;Karim;2026-11-05;;;nein;
-w0107;gufɩ;die Hand;la main;6 · Le corps;afɩ;;Balanka;Karim;2026-11-05;;;nein;
-w0108;ukǝǝ;der Fuß;le pied;6 · Le corps;ɩkǝǝ;;Balanka;Karim;2026-11-05;;;nein;
-w0109;gifiyɔ;der Finger;le doigt;6 · Le corps;ifiyɔ;;Balanka;Karim;2026-11-05;;;nein;
-w0110;ginadu;der Zeh;l'orteil;6 · Le corps;inadu;;Balanka;Karim;2026-11-05;;;nein;
-w0111;nkɔɔri;das Knie;le genou;6 · Le corps;akɔɔri;;Balanka;Karim;2026-11-05;;;nein;
-w0112;guŋunu;das Haar;le cheveu;6 · Le corps;aŋunu;;Balanka;Karim;2026-11-05;;;nein;
-w0113;bupǝlǝ;der Hinterkopf;l'occiput;6 · Le corps;;;Balanka;Karim;2026-11-05;;;nein;
-w0114;gutɛɛrɛ;der Oberschenkel;la cuisse;6 · Le corps;atɛɛrɛ;;Balanka;Karim;2026-11-05;;;nein;
-w0115;nkooru;das Bein;la jambe;6 · Le corps;akooru;;Balanka;Karim;2026-11-05;;;nein;
-w0116;ŋdǝǝŋ;1;1;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0117;nyɩmbo;2;2;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0118;ɩriiwo;3;3;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0119;ɩnaŋ;4;4;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0120;ɩnuuŋ;5;5;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0121;ɩkuulɩ;6;6;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0122;ɩkɔɔlɩ;7;7;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0123;ganaana;8;8;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0124;tɔɔbina;9;9;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0125;tǝb;10;10;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0126;tǝb murǝŋ;11;11;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0127;tǝb mɩnyɩmbo;12;12;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0128;tǝb mɩriiwo;13;13;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0129;tǝb mɩnaŋ;14;14;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0130;tǝb mɩnuuŋ;15;15;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0131;tǝb mɩkuulɩ;16;16;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0132;tǝb mɩkɔɔlɩ;17;17;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0133;tǝb maganaana;18;18;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0134;tǝb matɔɔbina;19;19;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0135;akoo;20;20;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0136;akoo matǝb;30;30;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0137;biyetǝb;50;50;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;5 × 10
-w0138;biye-;mal fünf (× 5);fois cinq (× 5);7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;Au marché, on l'omet parfois quand l'ordre de grandeur est clair : « 30 » veut alors dire 150, « 20 » veut dire 100.
-w0139;biyeakoo;100;100;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;5 × 20
-w0140;biyeakoomatǝb;150;150;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;5 × 30
-w0141;alfa;100;100;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;Mot courant. Il viendrait de l'ancienne monnaie des Blancs : la pièce de 100 portait un animal (« alpha »).
-w0142;jaŋta;25;25;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;Vient aussi de l'ancienne monnaie des Blancs : la pièce de 25 portait un animal appelé « jaŋta ».
-w0143;jaŋtabariiwo;75;75;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;3 × 25
-w0144;alfabanyimbo;200;200;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0145;alfabariiwo;300;300;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0146;alfabanǝŋ;400;400;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0147;sampuwa;500;500;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;"Semble venir d'une autre langue, car on l'utilise dans toute la région ; plus courant que « alfabanuuŋ »."
-w0148;ufǝlǝ;die Tüte / der Geldbeutel;le sachet / le portemonnaie;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0149;ufǝlǝ;eine Tüte (= 1000);un sachet (= 1000);7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0150;milii;1000;1000;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0151;miliibanyimbo;2000;2000;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;nein;
-w0045;abɔri;das Tier;l'animal;8 · Les animaux;ɩbɔri;;Balanka;Karim;2026-10-08;;;nein;
-w0046;araama;das Schaf;le mouton;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0047;utiyǝ;die Ziege;la chèvre;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0048;anaamu;das Rind;le bœuf;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0049;asingo;das Pferd;le cheval;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0050;akibɔbɔɔri;das Pferd;le cheval;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;Littéralement : « l'animal de la mort ».
-w0052;gakɔɔŋkoŋa;der Esel;l'âne;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0053;akiri;das Huhn;le poulet;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0054;akirisono;der Hahn;le coq;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0055;akirisimbura;die Henne;la poule;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;Littéralement : « le poulet femelle ».
-w0056;akirinari;die Henne;la poule;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;Littéralement : « la mère poulet ».
-w0057;alikuku;die Taube;le pigeon;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0058;kpakpafiu;die Ente;le canard;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0059;tolotolo;die Pute;la dinde;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0060;gasinyao;die Katze;le chat;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0061;afina;der Hund;le chien;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;nein;
-w0062;nsǝla;ein Ei;un œuf;8 · Les animaux;asǝla;;Balanka;Karim;2026-10-08;;;nein;
-w0152;ubuwa;die Schlange;le serpent;8 · Les animaux;;;Balanka;Karim;2026-11-05;;;nein;
-w0153;alaama;der Skorpion;le scorpion;8 · Les animaux;;;Balanka;Karim;2026-11-05;;;nein;
-w0071;yaara;(kleiner) täglicher Markt;(petit) marché quotidien;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0072;guya;(großer) Wochenmarkt;(grand) marché hebdomadaire;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0073;ijaŋi;der Chili (Piment);le piment;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0074;ikunu;die Okra;le gombo;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0075;tǝmatǝ;die Tomate;la tomate;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0076;jeele;die Zwiebel;l'oignon;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0077;ibarkaka;die Erdnuss;l'arachide;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0078;butuŋa;das Salz;le sel;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0079;giri;die Yamswurzel;l'igname;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0080;afujeeje;die kleinen Fische;les petits poissons;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0081;ŋfǝla;die Fischstücke;les poissons coupés;9 · Au marché;afǝla;;Balanka;Karim;2026-10-14;;;nein;
-w0082;ayo;der Knoblauch;l'ail;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0083;ŋkurǝ;das Wickeltuch (Pagne);le pagne;9 · Au marché;akurǝ;;Balanka;Karim;2026-10-14;;;nein;
-w0084;ŋkpatakpataa;die Schuhe;les chaussures;9 · Au marché;akpatakpataa;;Balanka;Karim;2026-10-14;;;nein;S'emploie seulement au pluriel.
-w0085;agɩdɩ;die Papaya;la papaye;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0086;akutu;die Orange;l'orange;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0087;kodi;die Banane;la banane;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0088;suŋʊsuŋʊ;die Zitrone;le citron;9 · Au marché;;;Balanka;Karim;2026-10-14;;;nein;
-w0154;bufe;das Öl;l'huile;9 · Au marché;;;Balanka;Karim;2026-11-05;;;nein;
-w0155;bufe buraana;das rote Öl (Palmöl);l'huile rouge (de palmier);9 · Au marché;;;Balanka;Karim;2026-11-05;;;nein;
-w0156;bufe ororo;das Pflanzenöl;l'huile végétale;9 · Au marché;;;Balanka;Karim;2026-11-05;;;nein;Désigne toutes les autres sortes d'huile.
-w0089;inini …?;Wie viel kostet …?;C'est combien … ?;9 · Au marché;;inini agɩdɩ?;Balanka;Karim;2026-10-14;;;nein;
-w0157;afɔɔna;weiß;blanc;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;nein;
-w0158;araana;rot;rouge;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;nein;
-w0159;areena;schwarz;noir;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;nein;
-w0160;cɔrɔcɔrɔɔ;bunt;multicolore;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;nein;
-w0161;abototoli;grün;vert;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;nein;
-w0017;buruku;Gott;dieu;11 · Divers;;;Balanka;Karim;2026-09-30;;;nein;
-w0051;aki;der Tod;la mort;11 · Divers;;;Balanka;Karim;2026-10-08;;;nein;
-w0162;butǝra;das Wasser;l'eau;11 · Divers;;;Balanka;Karim;2026-11-05;;;nein;
+w0094;nwara;ich suche;je cherche;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;ja;
+w0095;aŋunǝ uwara?;Wen suchst du?;Tu cherches qui ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;ja;
+w0096;mɩnakɔ uwara?;Was suchst du?;Tu cherches quoi ?;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;ja;
+w0097;asiga;gib mir / bring;donne-moi / amène;2 · Questions et phrases utiles;;;Balanka;Karim;2026-10-21;;;ja;
+w0020;ama;ich (bin);je (suis);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0021;owo;du (bist);tu (es);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0022;are;er / sie (ist);il / elle (est);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0023;atʊ;wir (sind) / zusammen;nous (sommes) / ensemble;3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0024;bare;ihr (seid);vous (êtes);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0025;bibi;sie (sind);ils / elles (sont);3 · Pronoms;;;Balanka;Karim;2026-09-30;;;ja;
+w0026;gikubula;der Morgen;le matin;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0027;gifisoono;der Mittag;le midi;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0028;gitoonfile;der Abend;le soir;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0029;anakǝru;der Mond;la lune;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0030;ufile;die Sonne;le soleil;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0039;ŋdǝŋ;heute;aujourd'hui;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0040;galaa;gestern;hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0041;gǝsaŋ;morgen;demain;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0042;gasala;vorgestern;avant-hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0043;gǝsaŋ makǝm;übermorgen;après-demain;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0044;gasala makǝm;vorvorgestern;avant-avant-hier;4 · La journée et le temps;;;Balanka;Karim;2026-10-08;;;ja;
+w0031;aditɛɛnɛ;Montag;lundi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0032;atalaata;Dienstag;mardi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0033;alaarba;Mittwoch;mercredi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0034;alaamisi;Donnerstag;jeudi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0035;arisǝma;Freitag;vendredi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0036;asiibi;Samstag;samedi;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0037;lahadi;Sonntag;dimanche;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0038;ifile ikɔɔli;sieben Tage;sept jours;5 · Jours de la semaine;;;Balanka;Karim;2026-10-08;;;ja;
+w0098;ndi;der Kopf;la tête;6 · Le corps;ari;;Balanka;Karim;2026-11-05;;;ja;
+w0099;gutuwa;das Ohr;l'oreille;6 · Le corps;atuwa;;Balanka;Karim;2026-11-05;;;ja;
+w0100;ginyinǝ;das Auge;l'œil;6 · Le corps;inyinǝ;;Balanka;Karim;2026-11-05;;;ja;
+w0101;giŋunu;die Nase;le nez;6 · Le corps;iŋunu;;Balanka;Karim;2026-11-05;;;ja;
+w0102;ganu;der Mund;la bouche;6 · Le corps;bunu;;Balanka;Karim;2026-11-05;;;ja;
+w0103;gunyuwa;der Zahn;la dent;6 · Le corps;anyuwa;;Balanka;Karim;2026-11-05;;;ja;
+w0104;gilɛlu;die Zunge;la langue;6 · Le corps;ɩlɛlu;;Balanka;Karim;2026-11-05;;;ja;La langue dans la bouche (l'organe).
+w0105;garara;das Kinn;le menton;6 · Le corps;burara;;Balanka;Karim;2026-11-05;;;ja;
+w0106;umunǝ;der Hals;le cou;6 · Le corps;ɩmunǝ;;Balanka;Karim;2026-11-05;;;ja;
+w0107;gufɩ;die Hand;la main;6 · Le corps;afɩ;;Balanka;Karim;2026-11-05;;;ja;
+w0108;ukǝǝ;der Fuß;le pied;6 · Le corps;ɩkǝǝ;;Balanka;Karim;2026-11-05;;;ja;
+w0109;gifiyɔ;der Finger;le doigt;6 · Le corps;ifiyɔ;;Balanka;Karim;2026-11-05;;;ja;
+w0110;ginadu;der Zeh;l'orteil;6 · Le corps;inadu;;Balanka;Karim;2026-11-05;;;ja;
+w0111;nkɔɔri;das Knie;le genou;6 · Le corps;akɔɔri;;Balanka;Karim;2026-11-05;;;ja;
+w0112;guŋunu;das Haar;le cheveu;6 · Le corps;aŋunu;;Balanka;Karim;2026-11-05;;;ja;
+w0113;bupǝlǝ;der Hinterkopf;l'occiput;6 · Le corps;;;Balanka;Karim;2026-11-05;;;ja;
+w0114;gutɛɛrɛ;der Oberschenkel;la cuisse;6 · Le corps;atɛɛrɛ;;Balanka;Karim;2026-11-05;;;ja;
+w0115;nkooru;das Bein;la jambe;6 · Le corps;akooru;;Balanka;Karim;2026-11-05;;;ja;
+w0116;ŋdǝǝŋ;1;1;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0117;nyɩmbo;2;2;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0118;ɩriiwo;3;3;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0119;ɩnaŋ;4;4;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0120;ɩnuuŋ;5;5;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0121;ɩkuulɩ;6;6;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0122;ɩkɔɔlɩ;7;7;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0123;ganaana;8;8;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0124;tɔɔbina;9;9;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0125;tǝb;10;10;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0126;tǝb murǝŋ;11;11;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0127;tǝb mɩnyɩmbo;12;12;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0128;tǝb mɩriiwo;13;13;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0129;tǝb mɩnaŋ;14;14;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0130;tǝb mɩnuuŋ;15;15;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0131;tǝb mɩkuulɩ;16;16;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0132;tǝb mɩkɔɔlɩ;17;17;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0133;tǝb maganaana;18;18;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0134;tǝb matɔɔbina;19;19;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0135;akoo;20;20;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0136;akoo matǝb;30;30;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0137;biyetǝb;50;50;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;5 × 10
+w0138;biye-;mal fünf (× 5);fois cinq (× 5);7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;Au marché, on l'omet parfois quand l'ordre de grandeur est clair : « 30 » veut alors dire 150, « 20 » veut dire 100.
+w0139;biyeakoo;100;100;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;5 × 20
+w0140;biyeakoomatǝb;150;150;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;5 × 30
+w0141;alfa;100;100;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;Mot courant. Il viendrait de l'ancienne monnaie des Blancs : la pièce de 100 portait un animal (« alpha »).
+w0142;jaŋta;25;25;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;Vient aussi de l'ancienne monnaie des Blancs : la pièce de 25 portait un animal appelé « jaŋta ».
+w0143;jaŋtabariiwo;75;75;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;3 × 25
+w0144;alfabanyimbo;200;200;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0145;alfabariiwo;300;300;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0146;alfabanǝŋ;400;400;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0147;sampuwa;500;500;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;"Semble venir d'une autre langue, car on l'utilise dans toute la région ; plus courant que « alfabanuuŋ »."
+w0148;ufǝlǝ;die Tüte / der Geldbeutel;le sachet / le portemonnaie;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0149;ufǝlǝ;eine Tüte (= 1000);un sachet (= 1000);7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0150;milii;1000;1000;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0151;miliibanyimbo;2000;2000;7 · Les nombres et l'argent;;;Balanka;Karim;2026-11-05;;;ja;
+w0045;abɔri;das Tier;l'animal;8 · Les animaux;ɩbɔri;;Balanka;Karim;2026-10-08;;;ja;
+w0046;araama;das Schaf;le mouton;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0047;utiyǝ;die Ziege;la chèvre;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0048;anaamu;das Rind;le bœuf;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0049;asingo;das Pferd;le cheval;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0050;akibɔbɔɔri;das Pferd;le cheval;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;Littéralement : « l'animal de la mort ».
+w0052;gakɔɔŋkoŋa;der Esel;l'âne;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0053;akiri;das Huhn;le poulet;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0054;akirisono;der Hahn;le coq;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0055;akirisimbura;die Henne;la poule;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;Littéralement : « le poulet femelle ».
+w0056;akirinari;die Henne;la poule;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;Littéralement : « la mère poulet ».
+w0057;alikuku;die Taube;le pigeon;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0058;kpakpafiu;die Ente;le canard;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0059;tolotolo;die Pute;la dinde;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0060;gasinyao;die Katze;le chat;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0061;afina;der Hund;le chien;8 · Les animaux;;;Balanka;Karim;2026-10-08;;;ja;
+w0062;nsǝla;ein Ei;un œuf;8 · Les animaux;asǝla;;Balanka;Karim;2026-10-08;;;ja;
+w0152;ubuwa;die Schlange;le serpent;8 · Les animaux;;;Balanka;Karim;2026-11-05;;;ja;
+w0153;alaama;der Skorpion;le scorpion;8 · Les animaux;;;Balanka;Karim;2026-11-05;;;ja;
+w0071;yaara;(kleiner) täglicher Markt;(petit) marché quotidien;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0072;guya;(großer) Wochenmarkt;(grand) marché hebdomadaire;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0073;ijaŋi;der Chili (Piment);le piment;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0074;ikunu;die Okra;le gombo;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0075;tǝmatǝ;die Tomate;la tomate;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0076;jeele;die Zwiebel;l'oignon;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0077;ibarkaka;die Erdnuss;l'arachide;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0078;butuŋa;das Salz;le sel;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0079;giri;die Yamswurzel;l'igname;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0080;afujeeje;die kleinen Fische;les petits poissons;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0081;ŋfǝla;die Fischstücke;les poissons coupés;9 · Au marché;afǝla;;Balanka;Karim;2026-10-14;;;ja;
+w0082;ayo;der Knoblauch;l'ail;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0083;ŋkurǝ;das Wickeltuch (Pagne);le pagne;9 · Au marché;akurǝ;;Balanka;Karim;2026-10-14;;;ja;
+w0084;ŋkpatakpataa;die Schuhe;les chaussures;9 · Au marché;akpatakpataa;;Balanka;Karim;2026-10-14;;;ja;S'emploie seulement au pluriel.
+w0085;agɩdɩ;die Papaya;la papaye;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0086;akutu;die Orange;l'orange;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0087;kodi;die Banane;la banane;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0088;suŋʊsuŋʊ;die Zitrone;le citron;9 · Au marché;;;Balanka;Karim;2026-10-14;;;ja;
+w0154;bufe;das Öl;l'huile;9 · Au marché;;;Balanka;Karim;2026-11-05;;;ja;
+w0155;bufe buraana;das rote Öl (Palmöl);l'huile rouge (de palmier);9 · Au marché;;;Balanka;Karim;2026-11-05;;;ja;
+w0156;bufe ororo;das Pflanzenöl;l'huile végétale;9 · Au marché;;;Balanka;Karim;2026-11-05;;;ja;Désigne toutes les autres sortes d'huile.
+w0089;inini …?;Wie viel kostet …?;C'est combien … ?;9 · Au marché;;inini agɩdɩ?;Balanka;Karim;2026-10-14;;;ja;
+w0157;afɔɔna;weiß;blanc;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;ja;
+w0158;araana;rot;rouge;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;ja;
+w0159;areena;schwarz;noir;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;ja;
+w0160;cɔrɔcɔrɔɔ;bunt;multicolore;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;ja;
+w0161;abototoli;grün;vert;10 · Les couleurs;;;Balanka;Karim;2026-10-14;;;ja;
+w0017;buruku;Gott;dieu;11 · Divers;;;Balanka;Karim;2026-09-30;;;ja;
+w0051;aki;der Tod;la mort;11 · Divers;;;Balanka;Karim;2026-10-08;;;ja;
+w0162;butǝra;das Wasser;l'eau;11 · Divers;;;Balanka;Karim;2026-11-05;;;ja;
