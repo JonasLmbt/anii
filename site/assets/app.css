@@ -318,3 +318,5 @@ main.wrap:has(.tiles) { max-width: 960px; }
 .notes h2 { font-size: 1.15rem; margin-top: 1rem; }
 .notes p { color: var(--muted); font-size: .95rem; }
 .account.hint p { color: var(--muted); font-size: .95rem; border-left: 2px solid var(--brand); padding-left: .8rem; }
+.speak.sm { width: 30px; height: 30px; vertical-align: middle; }
+.speak.sm .icon { width: 14px; height: 14px; }

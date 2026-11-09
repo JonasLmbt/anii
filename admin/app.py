@@ -216,8 +216,9 @@ def entry_from(payload):
     return e
 
 
-def audio_files(entry_id):
-    return [p for p in AUDIO_DIR.glob(entry_id + ".*") if p.suffix.lower() in bd.AUDIO_EXT] if AUDIO_DIR.exists() else []
+def audio_files(entry_id, suffix=""):
+    pat = entry_id + suffix + ".*"
+    return [p for p in AUDIO_DIR.glob(pat) if p.suffix.lower() in bd.AUDIO_EXT] if AUDIO_DIR.exists() else []
 
 
 # ------------------------------------------------------------------ Aktionen
@@ -226,8 +227,9 @@ def api_data():
     _, speakers, _ = load_speakers()
     lessons = sorted({r["lektion"] for r in rows if r["lektion"]}, key=bd.natural_key)
     for r in rows:
-        files = audio_files(r["id"]) if not r["audio"] else ([AUDIO_DIR / r["audio"]] if (AUDIO_DIR / r["audio"]).exists() else [])
-        r["_audio"] = files[0].name if files else ""
+        for key, col, suffix in (("_audio", "audio", ""), ("_audio_pl", "audio_plural", "-pl")):
+            files = audio_files(r["id"], suffix) if not r[col] else ([AUDIO_DIR / r[col]] if (AUDIO_DIR / r[col]).exists() else [])
+            r[key] = files[0].name if files else ""
     rows.sort(key=lambda r: anii.sort_key(r["anii"]))
     head = git("log", "-1", "--format=%h · %s · %cr", check=False)
     return {"entries": rows, "lessons": lessons, "speakers": speakers, "next_id": next_id(rows),
@@ -254,7 +256,8 @@ def api_save(p):
             raise LookupError(f"ID {e['id']} gibt es nicht (mehr)")
         if not new:
             old = next(r for r in rows if r["id"] == e["id"])
-            e["audio"] = old["audio"]  # Audio nur über die Audio-Funktionen ändern
+            for c in ("audio", "audio_plural", "sprecher_plural"):  # nur über die Audio-Funktionen ändern
+                e[c] = old.get(c, "")
             rows = [e if r["id"] == e["id"] else r for r in rows]
         else:
             rows.append(e)
@@ -270,7 +273,7 @@ def normalize_fields(fields):
     """Nur die übergebenen Felder bereinigen (Tabellen-Ansicht schickt nicht alle Spalten)."""
     out = {}
     for c, v in fields.items():
-        if c not in bd.COLUMNS or c in ("id", "audio"):
+        if c not in bd.COLUMNS or c in ("id", "audio", "audio_plural"):
             continue  # ID und Audio ändert die Tabelle nicht
         v = clean(v)
         if c == "datum":
@@ -368,7 +371,26 @@ def api_delete(p):
         return 200, {"push": status}
 
 
-def api_audio(eid, speaker, ctype, body):
+FORMS = {  # Singular: w0001.webm in „audio“, Plural: w0001-pl.webm in „audio_plural“
+    "sg": {"suffix": "", "col": "audio", "spk": "sprecher", "label": "Aufnahme"},
+    "pl": {"suffix": "-pl", "col": "audio_plural", "spk": "sprecher_plural", "label": "Plural-Aufnahme"},
+}
+
+
+def _form(form):
+    if form not in FORMS:
+        raise ValueError("Form muss sg oder pl sein")
+    return FORMS[form]
+
+
+def _remove_audio(e, f):
+    for path in audio_files(e["id"], f["suffix"]) + ([AUDIO_DIR / e[f["col"]]] if e.get(f["col"]) else []):
+        if path.exists():
+            path.unlink()
+
+
+def api_audio(eid, speaker, ctype, body, form="sg"):
+    f = _form(form or "sg")
     ext = AUDIO_TYPES.get((ctype or "").split(";")[0].strip().lower())
     if not ext:
         raise ValueError(f"Audioformat „{ctype}“ wird nicht unterstützt (MP3, M4A, OGG/Opus, WebM, WAV)")
@@ -381,20 +403,19 @@ def api_audio(eid, speaker, ctype, body):
         if not e:
             raise LookupError(f"ID {eid} gibt es nicht")
         AUDIO_DIR.mkdir(parents=True, exist_ok=True)
-        for f in audio_files(eid) + ([AUDIO_DIR / e["audio"]] if e["audio"] else []):
-            if f.exists():
-                f.unlink()
-        name = f"{eid}.{ext}"
+        _remove_audio(e, f)
+        name = f"{eid}{f['suffix']}.{ext}"
         (AUDIO_DIR / name).write_bytes(body)
-        e["audio"] = name
+        e[f["col"]] = name
         if speaker:
-            e["sprecher"] = clean(speaker)
+            e[f["spk"]] = clean(speaker)
         bd.write_csv(CSV_FILE, header, rows, bom)
-        status = commit(f"Editor: Aufnahme für {e['anii']} ({eid})", ["data/vokabeln.csv", "data/audio"])
-        return 200, {"audio": name, "push": status}
+        status = commit(f"Editor: {f['label']} für {e['anii']} ({eid})", ["data/vokabeln.csv", "data/audio"])
+        return 200, {"audio": name, "form": form, "push": status}
 
 
 def api_audio_delete(p):
+    f = _form(p.get("form") or "sg")
     with LOCK:
         sync()
         header, rows, bom = load_vocab()
@@ -402,12 +423,10 @@ def api_audio_delete(p):
         e = next((r for r in rows if r["id"] == eid), None)
         if not e:
             raise LookupError(f"ID {eid} gibt es nicht")
-        for f in audio_files(eid) + ([AUDIO_DIR / e["audio"]] if e["audio"] else []):
-            if f.exists():
-                f.unlink()
-        e["audio"] = ""
+        _remove_audio(e, f)
+        e[f["col"]] = ""
         bd.write_csv(CSV_FILE, header, rows, bom)
-        status = commit(f"Editor: Aufnahme für {e['anii']} ({eid}) entfernt", ["data/vokabeln.csv", "data/audio"])
+        status = commit(f"Editor: {f['label']} für {e['anii']} ({eid}) entfernt", ["data/vokabeln.csv", "data/audio"])
         return 200, {"push": status}
 
 
@@ -535,7 +554,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if path == "/admin/api/audio":
             q = parse_qs(urlparse(self.path).query)
             return self.guard(lambda: api_audio(q.get("id", [""])[0], q.get("speaker", [""])[0],
-                                                self.headers.get("Content-Type"), self.body()))
+                                                self.headers.get("Content-Type"), self.body(), q.get("form", ["sg"])[0]))
         try:
             p = json.loads(self.body() or b"{}")
         except (ValueError, UnicodeDecodeError):

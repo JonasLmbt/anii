@@ -116,6 +116,11 @@
     const b = e.target.closest && e.target.closest("[data-audio]");
     if (b) { e.preventDefault(); e.stopPropagation(); play(b.dataset.audio, b); }
   }, true);
+  // Kleiner Knopf für die Plural-Aufnahme (falls vorhanden)
+  function pluralBtn(entry) {
+    if (!entry.aup) return null;
+    return h("button", { class: "speak sm", type: "button", "data-audio": "/audio/" + entry.aup, "aria-label": t("play") + " " + (entry.pl || "") }, icon("volume-2"));
+  }
   function audioBtn(entry, label) {
     if (!entry.au) return null; // noch keine Aufnahme: kein Knopf
     return h("button", { class: "speak", type: "button", "data-audio": "/audio/" + entry.au, "aria-label": t("play") + " " + (label || entry.a) }, icon("volume-2"));
@@ -190,7 +195,7 @@
     }
 
     function card(e) {
-      const pl = e.pl ? h("span", { class: "pl" }, ` · ${t("d_plural")} `, h("span", { lang: "blo" }, e.pl)) : null;
+      const pl = e.pl ? h("span", { class: "pl" }, ` · ${t("d_plural")} `, h("span", { lang: "blo" }, e.pl), " ", pluralBtn(e)) : null;
       const trs = [LANG, OTHER].filter((l) => e[l]).map((l) =>
         h("div", { class: "tr", lang: l }, h("span", { class: "lab" }, l.toUpperCase()), " ", e[l]));
       const lesson = d.lessonById.get(e.l);
@@ -718,7 +723,7 @@
           c.dir === "a"
             ? h("div", { class: "q-main", lang: LANG }, tr(c.e).text)
             : h("div", null, h("div", { class: "q-main", lang: "blo" }, c.e.a), audioBtn(c.e)),
-          c.e.pl ? h("div", { class: "muted small", lang: "blo" }, t("d_plural"), " ", c.e.pl) : null,
+          c.e.pl ? h("div", { class: "muted small", lang: "blo" }, t("d_plural"), " ", c.e.pl, " ", pluralBtn(c.e)) : null,
           c.e.ex ? h("div", { class: "ex", lang: "blo" }, "« ", c.e.ex, " »") : null,
           c.e.no ? h("div", { class: "note muted small" }, c.e.no) : null);
         backSide.hidden = true;

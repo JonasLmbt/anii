@@ -66,3 +66,28 @@ main.wrap:has(.grid-table) { max-width: 1400px; }
 .grid-table .msgrow td { background: var(--surface); padding: .2rem .6rem; }
 .grid-table .msgrow .msgs { margin: .2rem 0; }
 .table-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .8rem 0 1rem; }
+
+/* ---------- Aufnahme-Modus ---------- */
+.rechead { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin: .8rem 0 .4rem; flex-wrap: wrap; }
+.rechead .qstat { margin: 0; }
+.qstat { font-size: .85rem; color: var(--good); }
+.qstat.wait { color: var(--ink); background: var(--warn-soft); padding: .15rem .6rem; border-radius: 99px; }
+.recword { text-align: center; padding: 1.4rem 0 .6rem; }
+.recword .big { font-size: 2.6rem; font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; }
+.recform { border-top: 1px solid var(--line); padding: 1rem 0; display: grid; grid-template-columns: 1fr auto; gap: .5rem 1rem; align-items: center; }
+.reclabel { display: flex; flex-direction: column; }
+.reclabel b { font-size: 1.4rem; }
+.recbtn {
+  grid-row: span 2; width: 84px; height: 84px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--bad); color: #fff; font-size: 2rem; line-height: 1; box-shadow: 0 0 0 6px var(--bad-soft);
+}
+.recbtn.on { background: var(--ink); color: var(--bg); box-shadow: 0 0 0 6px var(--line); animation: recpulse 1s infinite alternate; }
+@keyframes recpulse { to { box-shadow: 0 0 0 12px var(--bad-soft); } }
+.level { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+.level span { display: block; height: 100%; width: 0; background: var(--good); transition: width .05s; }
+.recstate { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; min-height: 44px; }
+.recstate .ok { color: var(--good); font-weight: 700; }
+.recstate .live { color: var(--bad); font-weight: 700; }
+.btn.small { min-height: 36px; padding: .3rem .8rem; font-size: .9rem; }
+.recnav { position: sticky; bottom: 0; background: var(--bg); display: flex; justify-content: space-between; gap: .6rem; padding: .8rem 0 calc(.8rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); margin-top: .5rem; }
+.recnav .btn { flex: 1; }

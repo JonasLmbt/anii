@@ -26,8 +26,8 @@ CSV_FILE = DATA / "vokabeln.csv"
 AUDIO_DIR = DATA / "audio"
 
 COLUMNS = ["id", "anii", "deutsch", "francais", "lektion", "plural", "beispiel", "dialekt",
-           "quelle", "datum", "audio", "sprecher", "geprueft", "notiz"]
-OPTIONAL_COLUMNS = {"id", "sprecher", "deutsch", "francais"}  # id/sprecher sind neuer; eine Übersetzungsspalte reicht
+           "quelle", "datum", "audio", "sprecher", "audio_plural", "sprecher_plural", "geprueft", "notiz"]
+OPTIONAL_COLUMNS = {"id", "sprecher", "deutsch", "francais", "audio_plural", "sprecher_plural"}  # neuere Spalten; eine Übersetzungsspalte reicht
 ANII_FIELDS = {"anii", "plural"}  # reiner Anii-Text (Beispielsätze können Übersetzungen enthalten)
 AUDIO_EXT = (".mp3", ".ogg", ".opus", ".m4a", ".webm", ".wav")
 ID_RE = re.compile(r"^w\d{4,}$")
@@ -247,8 +247,9 @@ def assign_ids(header, rows):
     return added
 
 
-def find_audio(e, report):
-    name = e["audio"]
+def find_audio(e, report, col="audio", suffix=""):
+    """Aufnahme zum Eintrag: Singular in „audio“ (w0001.webm), Plural in „audio_plural“ (w0001-pl.webm)."""
+    name = e[col]
     if name:
         if "/" in name or "\\" in name:
             report.error(f"Zeile {e['_line']}", f"Audio „{name}“: nur den Dateinamen angeben (liegt in data/audio/)")
@@ -257,10 +258,26 @@ def find_audio(e, report):
             report.warn(f"Zeile {e['_line']}", f"Audio-Datei data/audio/{name} fehlt")
             return None
         return name
-    for ext in AUDIO_EXT:  # Datei mit dem Namen der ID, z. B. w0001.mp3
-        if e["id"] and (AUDIO_DIR / (e["id"] + ext)).is_file():
-            return e["id"] + ext
+    for ext in AUDIO_EXT:  # Datei mit dem Namen der ID, z. B. w0001.mp3 bzw. w0001-pl.mp3
+        if e["id"] and (AUDIO_DIR / (e["id"] + suffix + ext)).is_file():
+            return e["id"] + suffix + ext
     return None
+
+
+def speaker_ok(e, col, spk, report):
+    """Ohne Sprecherangabe wird veröffentlicht (Kinder werden bewusst nicht genannt);
+    mit Sprecherangabe nur, wenn die Person zugestimmt hat."""
+    code = e[col]
+    if not code:
+        return True
+    s = spk.get(code)
+    if not s:
+        report.warn(f"Zeile {e['_line']}", f"Sprecher-Kürzel „{code}“ steht nicht in data/sprecher.csv")
+        return True
+    if anii.lower(s.get("zustimmung", "")) != "ja":
+        report.warn(f"Zeile {e['_line']}", f"Sprecher {code} hat (noch) nicht zugestimmt – Aufnahme wird nicht veröffentlicht")
+        return False
+    return True
 
 
 def build(entries, speakers, alphabet_rows, report, out):
@@ -271,21 +288,19 @@ def build(entries, speakers, alphabet_rows, report, out):
     site_entries = []
     for e in sorted(entries, key=lambda x: anii.sort_key(x["anii"])):
         audio = find_audio(e, report)
-        if audio and e["sprecher"]:
-            s = spk.get(e["sprecher"])
-            if not s:
-                report.warn(f"Zeile {e['_line']}", f"Sprecher-Kürzel „{e['sprecher']}“ steht nicht in data/sprecher.csv")
-            elif anii.lower(s.get("zustimmung", "")) != "ja":
-                report.warn(f"Zeile {e['_line']}", f"Sprecher {e['sprecher']} hat (noch) nicht zugestimmt – Aufnahme wird nicht veröffentlicht")
-                audio = None
-        elif audio and not e["sprecher"]:
-            report.warn(f"Zeile {e['_line']}", "Aufnahme ohne Sprecher-Kürzel – für Lizenz und Archiv bitte eintragen")
-        if audio:
-            used_audio.add(audio)
-            audio_bytes += (AUDIO_DIR / audio).stat().st_size
-            if audio.endswith(".wav"):
-                report.warn(f"Zeile {e['_line']}", f"{audio} ist WAV (groß) – für die Website besser MP3/Opus")
+        if audio and not speaker_ok(e, "sprecher", spk, report):
+            audio = None
+        audio_pl = find_audio(e, report, "audio_plural", "-pl")
+        if audio_pl and not speaker_ok(e, "sprecher_plural", spk, report):
+            audio_pl = None
+        for a in (audio, audio_pl):
+            if a:
+                used_audio.add(a)
+                audio_bytes += (AUDIO_DIR / a).stat().st_size
+                if a.endswith(".wav"):
+                    report.warn(f"Zeile {e['_line']}", f"{a} ist WAV (groß) – für die Website besser MP3/Opus")
         e["_audio"] = audio
+        e["_audio_pl"] = audio_pl
         lid = anii.slug(e["lektion"])
         lessons.setdefault(lid, {"id": lid, "name": e["lektion"], "n": 0})
         lessons[lid]["n"] += 1
@@ -296,6 +311,8 @@ def build(entries, speakers, alphabet_rows, report, out):
                 item[dst] = e[src]
         if audio:
             item["au"] = audio
+        if audio_pl:
+            item["aup"] = audio_pl
         if e["geprueft"] == "ja":
             item["ok"] = 1
         site_entries.append(item)

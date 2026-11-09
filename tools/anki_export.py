@@ -22,15 +22,15 @@ CSS = """
 """
 
 MODEL = genanki.Model(
-    _num("anii-model-v1"),
+    _num("anii-model-v2"),  # v2: eigene Plural-Aufnahme
     "Anii (Balanka)",
-    fields=[{"name": n} for n in (("ID", "Anii", "Français", "Deutsch", "Plural", "Exemple", "Audio", "Source", "Remarque"))],
+    fields=[{"name": n} for n in (("ID", "Anii", "Français", "Deutsch", "Plural", "Exemple", "Audio", "Source", "Remarque", "AudioPluriel")) ],
     templates=[
         {
             "name": "Anii → Français/Deutsch",
             "qfmt": '<div class="anii">{{Anii}}</div>{{Audio}}',
             "afmt": '{{FrontSide}}<hr id="answer"><div>{{Français}}</div><div class="de">{{Deutsch}}</div>'
-                    '{{#Plural}}<div class="small">pl. {{Plural}}</div>{{/Plural}}'
+                    '{{#Plural}}<div class="small">pl. {{Plural}} {{AudioPluriel}}</div>{{/Plural}}'
                     '{{#Exemple}}<div class="small"><i>{{Exemple}}</i></div>{{/Exemple}}'
                     '{{#Remarque}}<div class="small">{{Remarque}}</div>{{/Remarque}}',
         },
@@ -38,7 +38,7 @@ MODEL = genanki.Model(
             "name": "Français/Deutsch → Anii",
             "qfmt": '<div>{{Français}}</div><div class="de">{{Deutsch}}</div>',
             "afmt": '{{FrontSide}}<hr id="answer"><div class="anii">{{Anii}}</div>{{Audio}}'
-                    '{{#Plural}}<div class="small">pl. {{Plural}}</div>{{/Plural}}',
+                    '{{#Plural}}<div class="small">pl. {{Plural}} {{AudioPluriel}}</div>{{/Plural}}',
         },
     ],
     css=CSS,
@@ -54,9 +54,13 @@ def write_apkg(entries, lessons, path: Path, audio_dir: Path):
         sound = f"[sound:{audio}]" if audio else ""
         if audio:
             media.append(str(audio_dir / audio))
+        audio_pl = e.get("_audio_pl")
+        sound_pl = f"[sound:{audio_pl}]" if audio_pl else ""
+        if audio_pl:
+            media.append(str(audio_dir / audio_pl))
         note = genanki.Note(
             model=MODEL,
-            fields=[html.escape(e[k]) for k in ("id", "anii", "francais", "deutsch", "plural", "beispiel")] + [sound, html.escape(e["quelle"]), html.escape(e["notiz"])],
+            fields=[html.escape(e[k]) for k in ("id", "anii", "francais", "deutsch", "plural", "beispiel")] + [sound, html.escape(e["quelle"]), html.escape(e["notiz"]), sound_pl],
             guid=genanki.guid_for("anii", e["id"]),
             tags=["anii", "geprueft" if e["geprueft"] == "ja" else "ungeprueft"],
         )
