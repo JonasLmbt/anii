@@ -2,6 +2,8 @@
 "use strict";
 (() => {
   const app = document.getElementById("app");
+  // Seite neu zeichnen: Listen auflösen, leere Teile (null) weglassen
+  const paint = (...kids) => app.replaceChildren(...kids.flat(Infinity).filter((k) => k != null && k !== false));
   const S = { data: null, q: "", lesson: "", lastField: null };
   const remember = {
     get(k, d) { try { return localStorage.getItem("anii_ed_" + k) ?? d; } catch { return d; } },
@@ -51,7 +53,7 @@
   function viewLogin() {
     const pw = h("input", { type: "password", autocomplete: "current-password", required: true });
     const msg = h("p", { class: "error", role: "alert" });
-    app.replaceChildren(h("form", { class: "panel login", onsubmit: async (e) => {
+    paint(h("form", { class: "panel login", onsubmit: async (e) => {
       e.preventDefault();
       msg.textContent = "";
       const r = await fetch("/admin/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: pw.value }) });
@@ -91,7 +93,7 @@
         h("button", { class: "linkish", style: "display:inline;padding:0", type: "button", onclick: async () => {
           try { const r = await api("push", {}); toast(pushNote(r.push), r.push !== "ok"); await load(); viewList(); } catch (e) { toast(e.message, true); }
         } }, "erneut senden")] : null);
-    app.replaceChildren(
+    paint(
       h("div", { class: "bar" },
         h("button", { class: "btn primary", type: "button", onclick: () => viewForm(null) }, "+ Neues Wort"),
         h("button", { class: "btn", type: "button", onclick: () => viewTable() }, "Tabelle"),
@@ -216,7 +218,7 @@
           try { const r = await api("delete", { id: e.id }); toast(pushNote(r.push)); await load(); viewList(); } catch (err) { toast(err.message, true); }
         } }, "Löschen") : null));
 
-    app.replaceChildren(
+    paint(
       h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => { ev.preventDefault(); viewList(); } }, "← alle Wörter")),
       h("h1", null, isNew ? "Neues Wort" : [h("span", { lang: "blo" }, e.anii), " ", h("small", { class: "muted" }, e.id)]),
       isNew ? h("p", { class: "muted small" }, `Bekommt beim Speichern die ID ${S.data.next_id}. Einsortiert wird automatisch nach dem Anii-Alphabet.`) : null,
@@ -285,7 +287,7 @@
       recBtn.classList.add("on");
     });
 
-    box.append(current, h("div", { class: "rec", style: "margin-top:.6rem" }, recBtn, h("span", { class: "muted small" }, "oder Datei:"), file), preview, hint);
+    box.append(...[current, h("div", { class: "rec", style: "margin-top:.6rem" }, recBtn, h("span", { class: "muted small" }, "oder Datei:"), file), preview, hint].filter(Boolean));
     return box;
   }
 
@@ -435,7 +437,7 @@
     };
     [sel, only, pl].forEach((x) => x.addEventListener("change", upd));
     const qs = queueStatus();
-    app.replaceChildren(
+    paint(
       h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => { ev.preventDefault(); viewList(); } }, "← alle Wörter")),
       h("h1", null, "Aufnehmen"),
       h("p", { class: "lead" }, "Ein Wort nach dem anderen: groß anzeigen, aufnehmen, anhören, behalten. Funktioniert auch ohne Netz – die Aufnahmen werden hochgeladen, sobald wieder Verbindung da ist."),
@@ -526,7 +528,7 @@
     }
 
     const blocks = await Promise.all(forms.map(([f, l, w]) => block(f, l, w)));
-    app.replaceChildren(
+    paint(
       h("div", { class: "rechead" },
         h("a", { href: "#", onclick: (ev) => { ev.preventDefault(); Mic.release(); viewRecordSetup(); } }, "← Ende"),
         h("span", { class: "muted" }, `${i + 1} / ${list.length}`),
@@ -544,7 +546,7 @@
 
   function recDone(list) {
     Mic.release();
-    app.replaceChildren(
+    paint(
       h("h1", null, "Geschafft"),
       h("p", { class: "lead" }, `${list.length} Wörter durchgegangen. Die Aufnahmen erscheinen auf der Seite etwa 2 Minuten nach dem Upload.`),
       queueStatus(),
@@ -663,7 +665,7 @@
     q.addEventListener("input", () => { S.q = q.value; render(); });
     sel.addEventListener("change", () => { S.lesson = sel.value; render(); });
 
-    app.replaceChildren(
+    paint(
       h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => {
         ev.preventDefault();
         if (dirty.size && !confirm("Ungespeicherte Änderungen verwerfen?")) return;
@@ -692,7 +694,7 @@
     const name = h("input", { autocomplete: "off" });
     const ort = h("input", { value: "Balanka" });
     const ok = h("input", { type: "checkbox" });
-    app.replaceChildren(
+    paint(
       h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => { ev.preventDefault(); viewList(); } }, "← alle Wörter")),
       h("h1", null, "Sprecherinnen und Sprecher"),
       list.length ? h("ul", { class: "list" }, list.map((s) => h("li", null, h("button", { type: "button", onclick: async () => {
@@ -717,7 +719,7 @@
 
   async function start() {
     Queue.kick();
-    try { await load(); viewList(); } catch (e) { if (S.data === null) app.replaceChildren(h("p", { class: "error" }, e.message)); }
+    try { await load(); viewList(); } catch (e) { if (S.data === null) paint(h("p", { class: "error" }, e.message)); }
   }
-  api("me").then((r) => (r.ok ? start() : viewLogin())).catch((e) => app.replaceChildren(h("p", { class: "error" }, e.message)));
+  api("me").then((r) => (r.ok ? start() : viewLogin())).catch((e) => paint(h("p", { class: "error" }, e.message)));
 })();
