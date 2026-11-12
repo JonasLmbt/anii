@@ -96,6 +96,7 @@
     paint(
       h("div", { class: "bar" },
         h("button", { class: "btn primary", type: "button", onclick: () => viewForm(null) }, "+ Neues Wort"),
+        h("button", { class: "btn primary", type: "button", onclick: () => viewInbox() }, "Eingang"),
         h("button", { class: "btn", type: "button", onclick: () => viewTable() }, "Tabelle"),
         h("button", { class: "btn", type: "button", onclick: () => viewRecordSetup() }, "Aufnehmen"),
         h("button", { class: "btn", type: "button", onclick: viewSpeakers }, "Sprecher"),
@@ -553,6 +554,136 @@
       h("div", { class: "row gap" },
         h("button", { class: "btn primary", type: "button", onclick: () => viewRecordSetup() }, "Weitere aufnehmen"),
         h("button", { class: "btn", type: "button", onclick: () => viewList() }, "Zur Wortliste")));
+  }
+
+  // ------------------------------------------------------------ Eingang (Arbeitsspeicher für neue Wörter)
+  // Speichert automatisch; unten gibt es immer eine leere Zeile. Übernommen ins Wörterbuch wird erst,
+  // wenn Jonas „Go“ sagt (dann prüft Claude Rechtschreibung, Anmerkungen und Lektionen).
+  const ICOLS = [
+    ["anii", "Anii", 11, true], ["francais", "Français", 13], ["deutsch", "Deutsch", 12], ["lektion", "Lektion (optional)", 12],
+    ["plural", "Plural", 9, true], ["beispiel", "Beispiel", 12, true], ["notiz", "Anmerkung", 18],
+    ["quelle", "Quelle", 7], ["datum", "Datum", 8.5],
+  ];
+  const INBOX_LOCAL = "anii_ed_eingang"; // Sicherheitskopie im Browser, falls das Netz weg ist
+  const newUid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  async function viewInbox() {
+    let rows = [];
+    let warnings = {};
+    let serverOk = true;
+    try {
+      const r = await api("inbox");
+      rows = r.rows || [];
+      warnings = r.warnings || {};
+    } catch {
+      serverOk = false;
+      try { rows = JSON.parse(localStorage.getItem(INBOX_LOCAL) || "[]"); } catch { rows = []; }
+    }
+    const status = h("span", { class: "small muted", role: "status" });
+    const count = h("span", { class: "small muted" });
+    const tbody = h("tbody");
+    const lessons = h("datalist", { id: "i-lessons" }, S.data.lessons.map((l) => h("option", { value: l })));
+    let timer = 0;
+    let saving = false;
+    let again = false;
+
+    const filled = (r) => ["anii", "francais", "deutsch", "plural", "beispiel", "notiz"].some((c) => (r[c] || "").trim());
+    const updCount = () => { const n = rows.filter(filled).length; count.textContent = n ? `${n} ${n === 1 ? "Wort" : "Wörter"} im Eingang` : "Eingang ist leer"; };
+
+    function blankRow() {
+      return { uid: newUid(), created: Math.floor(Date.now() / 1000), anii: "", francais: "", deutsch: "", lektion: "", plural: "",
+        beispiel: "", notiz: "", quelle: remember.get("quelle", ""), datum: new Date().toISOString().slice(0, 10) };
+    }
+    function ensureBlank() {
+      const last = rows[rows.length - 1];
+      if (!last || filled(last)) {
+        const r = blankRow();
+        rows.push(r);
+        tbody.append(rowEl(r));
+      }
+    }
+    async function save() {
+      if (saving) { again = true; return; }
+      saving = true;
+      status.textContent = "Speichert …";
+      const data = rows.filter(filled);
+      try { localStorage.setItem(INBOX_LOCAL, JSON.stringify(data)); } catch { /* egal */ }
+      try {
+        const r = await api("inbox", { rows: data });
+        warnings = r.warnings || {};
+        showWarnings();
+        status.textContent = "✓ gespeichert";
+        serverOk = true;
+      } catch {
+        status.textContent = "Nicht gespeichert (kein Netz?) – ist im Browser gesichert, wird erneut versucht";
+        setTimeout(schedule, 15000);
+      }
+      saving = false;
+      if (again) { again = false; save(); }
+    }
+    function schedule() { clearTimeout(timer); status.textContent = "…"; timer = setTimeout(save, 1200); }
+    document.addEventListener("visibilitychange", () => { if (tbody.isConnected && document.visibilityState === "hidden" && timer) { clearTimeout(timer); save(); } });
+
+    function showWarnings() {
+      tbody.querySelectorAll("tr[data-uid]").forEach((tr) => {
+        const w = warnings[tr.dataset.uid];
+        tr.classList.toggle("warn", !!w);
+        tr.title = w ? w.join("\n") : "";
+      });
+    }
+
+    function rowEl(r) {
+      const tr = h("tr", { "data-uid": r.uid });
+      ICOLS.forEach(([col, , , isAnii], ci) => {
+        const inp = h("input", { value: r[col] || "", "data-col": col, list: col === "lektion" ? "i-lessons" : null, lang: isAnii ? "blo" : null,
+          spellcheck: isAnii ? "false" : null, autocomplete: "off", autocapitalize: "off", type: col === "datum" ? "date" : null });
+        if (isAnii) inp.addEventListener("focus", () => { S.lastField = inp; });
+        inp.addEventListener("input", () => {
+          r[col] = inp.value;
+          if (col === "quelle") remember.set("quelle", inp.value);
+          ensureBlank();
+          updCount();
+          schedule();
+        });
+        inp.addEventListener("keydown", (ev) => { // Enter: gleiche Spalte, nächste Zeile
+          if (ev.key !== "Enter") return;
+          ev.preventDefault();
+          const next = tr.nextElementSibling;
+          if (next) next.querySelectorAll("input")[ci].focus();
+        });
+        tr.append(h("td", null, inp));
+      });
+      tr.append(h("td", { class: "tc" }, h("button", { class: "linkish inline", type: "button", title: "Zeile löschen", "aria-label": "Zeile löschen", onclick: () => {
+        if (filled(r) && !confirm(`„${r.anii || r.francais || r.deutsch}“ aus dem Eingang löschen?`)) return;
+        rows = rows.filter((x) => x !== r);
+        tr.remove();
+        ensureBlank();
+        updCount();
+        schedule();
+      } }, "×")));
+      return tr;
+    }
+
+    paint(
+      h("p", { class: "small" }, h("a", { href: "#", onclick: (ev) => { ev.preventDefault(); clearTimeout(timer); save(); viewList(); } }, "← Liste")),
+      h("h1", null, "Eingang"),
+      h("p", { class: "lead" }, "Arbeitsspeicher für neue Wörter. Einfach eintippen – es wird automatisch gespeichert, unten kommt immer eine neue Zeile dazu. Nichts davon ist öffentlich."),
+      h("p", { class: "muted small" }, "Wenn du fertig bist, sag Claude „Go“: Dann werden die Wörter ins Wörterbuch übernommen, Französisch geprüft, Deutsch ergänzt, Anmerkungen geglättet und Lektionen zugeordnet (außer du hast eine eingetragen)."),
+      serverOk ? null : h("p", { class: "error" }, "Der Server ist gerade nicht erreichbar – angezeigt wird die Sicherheitskopie aus diesem Browser."),
+      h("div", { class: "bar" }, count, status),
+      lessons,
+      h("div", { class: "table-wrap" }, h("table", { class: "grid-table" },
+        h("colgroup", null, ICOLS.map(([, , w]) => h("col", { style: `width:${w}rem` })), h("col", { style: "width:2rem" })),
+        h("thead", null, h("tr", null, ICOLS.map(([, label]) => h("th", null, label)), h("th", null, ""))),
+        tbody)),
+      keyDock());
+    rows.forEach((r) => tbody.append(rowEl(r)));
+    ensureBlank();
+    updCount();
+    showWarnings();
+    status.textContent = serverOk ? "✓ gespeichert" : "";
+    const firstEmpty = tbody.lastElementChild && tbody.lastElementChild.querySelector("input");
+    if (firstEmpty) firstEmpty.focus();
   }
 
   // ------------------------------------------------------------ Tabelle (wie Excel)

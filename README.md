@@ -145,3 +145,13 @@ python3 ~/anii-site/learn/app.py list                    # Konten anzeigen
 python3 ~/anii-site/learn/app.py reset-password "Name"   # vergessenes Passwort neu setzen
 python3 ~/anii-site/learn/app.py delete "Name"           # Konto löschen
 ```
+
+## Eingang (neue Wörter sammeln)
+
+Im Editor unter **Eingang** gibt es einen Arbeitsspeicher: eine Tabelle nur für neue Wörter, die sich
+selbst speichert und unten immer eine leere Zeile anbietet. Die Einträge liegen auf dem Server in
+`~/.config/anii-admin/eingang.json` – nicht im Repository, nicht öffentlich, nicht im Wörterbuch.
+
+Übernommen wird auf Zuruf („Go“): IDs vergeben, Französisch prüfen, Deutsch ergänzen, Anmerkungen
+auf Französisch glätten, Lektion zuordnen (eine von Hand eingetragene Lektion bleibt), Anii-Schreibung
+nur melden, nie stillschweigend ändern. Danach werden die übernommenen Zeilen aus dem Eingang entfernt.

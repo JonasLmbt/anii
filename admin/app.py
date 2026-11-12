@@ -451,6 +451,60 @@ def api_speaker(p):
         return 200, {"kuerzel": s["kuerzel"], "push": status}
 
 
+# ------------------------------------------------------------------ Eingang (Arbeitsspeicher)
+# Neue Wörter sammeln, bevor sie ins Wörterbuch übernommen werden. Liegt bewusst nicht im
+# Git-Repository (nicht öffentlich, kein Commit pro Tastendruck), sondern in CONF/eingang.json.
+INBOX_FILE = CONF / "eingang.json"
+INBOX_FIELDS = ["anii", "francais", "deutsch", "lektion", "plural", "beispiel", "notiz", "quelle", "datum"]
+ANII_INBOX = {"anii", "plural", "beispiel"}
+
+
+def load_inbox():
+    try:
+        return json.loads(INBOX_FILE.read_text(encoding="utf-8")).get("rows", [])
+    except (OSError, ValueError):
+        return []
+
+
+def api_inbox_get():
+    return {"rows": load_inbox(), "warnings": inbox_warnings(load_inbox())}
+
+
+def inbox_warnings(rows):
+    out = {}
+    for r in rows:
+        msgs = []
+        for c in ANII_INBOX:
+            for ch, sug, desc in anii.check_chars(r.get(c, ""), True):
+                msgs.append(f"{c}: {desc}" + (f" → „{sug}“" if sug else ""))
+        if msgs:
+            out[r["uid"]] = msgs
+    return out
+
+
+def api_inbox_save(p):
+    rows = p.get("rows")
+    if not isinstance(rows, list) or len(rows) > 2000:
+        raise ValueError("Ungültige Zeilen")
+    clean_rows = []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        row = {c: clean(r.get(c, "")) for c in INBOX_FIELDS}
+        if not any(row[c] for c in ("anii", "francais", "deutsch", "plural", "beispiel", "notiz")):
+            continue  # leere Zeile
+        uid = str(r.get("uid") or "")
+        row["uid"] = uid if re.match(r"^[\w-]{4,40}$", uid) else secrets.token_hex(6)
+        row["created"] = int(r.get("created") or time.time())
+        clean_rows.append(row)
+    with LOCK:
+        CONF.mkdir(parents=True, exist_ok=True)
+        tmp = INBOX_FILE.with_suffix(".tmp")
+        tmp.write_text(json.dumps({"rows": clean_rows, "saved": int(time.time())}, ensure_ascii=False, indent=1), encoding="utf-8")
+        tmp.replace(INBOX_FILE)  # atomar: nie eine halb geschriebene Datei
+    return 200, {"count": len(clean_rows), "warnings": inbox_warnings(clean_rows)}
+
+
 def api_push():
     with LOCK:
         sync()
@@ -496,6 +550,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
             return self.send(200, {"ok": valid_session(self.token()), "has_password": (CONF / "password").exists()})
         if not valid_session(self.token()):
             return self.send(401, {"error": "Bitte anmelden"})
+        if path == "/admin/api/inbox":
+            return self.guard(lambda: (200, api_inbox_get()))
         if path == "/admin/api/data":
             return self.guard(lambda: (200, api_data()))
         if path.startswith("/admin/audio/"):
@@ -563,6 +619,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             "/admin/api/check": lambda: (200, api_check(p)),
             "/admin/api/save": lambda: api_save(p),
             "/admin/api/save-many": lambda: api_save_many(p),
+            "/admin/api/inbox": lambda: api_inbox_save(p),
             "/admin/api/delete": lambda: api_delete(p),
             "/admin/api/audio-delete": lambda: api_audio_delete(p),
             "/admin/api/speaker": lambda: api_speaker(p),
