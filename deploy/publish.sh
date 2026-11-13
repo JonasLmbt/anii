@@ -21,7 +21,12 @@ if [ "$NEW" = "$(cat .last-published 2>/dev/null || true)" ] && [ "${1:-}" != "-
 fi
 OLD=$(git rev-parse HEAD)
 git reset -q --hard "$NEW"
-[ -x "$PY" ] || { ~/.local/bin/uv venv -q .venv && ~/.local/bin/uv pip install -q --python "$PY" -r requirements.txt; }
+# Python-Umgebung anlegen bzw. nachziehen, wenn sich requirements.txt geändert hat
+REQ=$(sha1sum requirements.txt | cut -c1-12)
+if [ ! -x "$PY" ] || [ "$(cat .venv/.req 2>/dev/null)" != "$REQ" ]; then
+    [ -x "$PY" ] || ~/.local/bin/uv venv -q .venv
+    ~/.local/bin/uv pip install -q --python "$PY" -r requirements.txt && echo "$REQ" > .venv/.req
+fi
 
 rm -rf "$BUILD" && mkdir -p "$BUILD"
 for run in a b; do
