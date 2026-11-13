@@ -54,6 +54,8 @@ CSS = """
 .anii { font-size: 40px; }
 .small { font-size: 18px; color: #666; }
 .de { color: #555; }
+.plbtn { font-size: 16px; border: 1px solid #bbb; border-radius: 50%; width: 30px; height: 30px; padding: 0;
+         background: transparent; color: inherit; cursor: pointer; vertical-align: middle; }
 """
 
 MODEL = genanki.Model(
@@ -88,8 +90,9 @@ def write_apkg(entries, lessons, path: Path, audio_dir: Path):
     tmpdir = tempfile.TemporaryDirectory()
     staged = Path(tmpdir.name)
 
-    def sound_for(name):
-        """[sound:…]-Tag; legt die (umgewandelte) Datei unter ihrem Namen im Deck ab."""
+    def sound_for(name, button=False):
+        """[sound:…]-Tag (spielt Anki von selbst ab) oder – mit button=True – ein ▶-Knopf, der nur auf
+        Antippen abspielt (für den Plural). Legt die (umgewandelte) Datei unter ihrem Namen im Deck ab."""
         if not name:
             return ""
         src = audio_dir / name
@@ -100,11 +103,15 @@ def write_apkg(entries, lessons, path: Path, audio_dir: Path):
             media.append(str(staged / name))
         else:
             media.append(str(src))  # ohne ffmpeg: Original
+        if button:
+            # src="…" erkennt Anki als Medienverweis (bleibt bei „Medien überprüfen“ erhalten)
+            return ('<button type="button" class="plbtn" onclick="var a=this.nextElementSibling;a.currentTime=0;a.play()">▶</button>'
+                    f'<audio src="{html.escape(name)}" preload="auto"></audio>')
         return f"[sound:{name}]"
 
     for e in entries:
         sound = sound_for(e.get("_audio"))
-        sound_pl = sound_for(e.get("_audio_pl"))
+        sound_pl = sound_for(e.get("_audio_pl"), button=True)
         note = genanki.Note(
             model=MODEL,
             fields=[html.escape(e[k]) for k in ("id", "anii", "francais", "deutsch", "plural", "beispiel")] + [sound, html.escape(e["quelle"]), html.escape(e["notiz"]), sound_pl],
