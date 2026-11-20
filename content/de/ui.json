@@ -142,5 +142,15 @@
   "a_err_too_many": "Zu viele Versuche. Bitte in 15 Minuten noch einmal.",
   "a_err_net": "Keine Verbindung. Bitte noch einmal versuchen, wenn du Netz hast.",
   "a_privacy": "Wir speichern nur deinen Namen, dein Passwort (verschlüsselt) und deinen Lernstand. Keine E-Mail, keine Telefonnummer.",
-  "a_forgot": "Passwort vergessen? Das Projektteam kann es zurücksetzen."
+  "a_forgot": "Passwort vergessen? Das Projektteam kann es zurücksetzen.",
+
+  "t_q_pron": "Wie heißt das auf Anii?",
+  "t_pron": "Pronomen",
+  "t_pron_sub": "wir · gehen → gɩ tee",
+  "t_pron_all": "Pronomen-Übung mit allen Verben",
+  "wt_verbe": "Verb",
+  "wt_nom": "Nomen",
+  "wt_adjectif": "Adjektiv",
+  "wt_pronom": "Pronomen",
+  "wt_expression": "Ausdruck"
 }

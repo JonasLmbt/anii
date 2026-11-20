@@ -142,5 +142,15 @@
   "a_err_too_many": "Trop d’essais. Réessaie dans 15 minutes.",
   "a_err_net": "Pas de connexion. Réessaie quand tu as du réseau.",
   "a_privacy": "Nous enregistrons seulement ton nom, ton mot de passe (chiffré) et ta progression. Pas d’e-mail, pas de numéro de téléphone.",
-  "a_forgot": "Mot de passe oublié ? Demande à l’équipe du projet de le réinitialiser."
+  "a_forgot": "Mot de passe oublié ? Demande à l’équipe du projet de le réinitialiser.",
+
+  "t_q_pron": "Comment dit-on en anii ?",
+  "t_pron": "Pronoms",
+  "t_pron_sub": "nous · aller → gɩ tee",
+  "t_pron_all": "Exercice des pronoms avec tous les verbes",
+  "wt_verbe": "verbe",
+  "wt_nom": "nom",
+  "wt_adjectif": "adjectif",
+  "wt_pronom": "pronom",
+  "wt_expression": "expression"
 }

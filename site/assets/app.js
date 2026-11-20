@@ -202,6 +202,7 @@
       // knapp: Thema, ggf. abweichender Dialekt, Quelle, Datum – ohne Beschriftungen
       const date = e.date && /^\d{4}-\d{2}-\d{2}$/.test(e.date) ? e.date.split("-").reverse().join(".") : e.date;
       const meta = [
+        e.wt && (T["wt_" + e.wt] || e.wt),
         lesson && lesson.name.replace(/^\d+\s*·\s*/, ""),
         e.dia && e.dia !== "Balanka" && e.dia,
         e.src && t("d_source") + (LANG === "fr" ? " : " : ": ") + e.src,
@@ -371,6 +372,7 @@
 
     function selection(sel) {
       if (sel === "rev") return { title: t("t_review"), entries: d.entries, back: "#/", review: true };
+      if (sel === "verbes") return { title: t("t_pron_all"), entries: d.entries.filter((e) => e.wt === "verbe"), back: "#/" };
       if (sel.startsWith("c:")) {
         const ids = sel.slice(2).split("+").filter((x) => d.lessonById.has(x));
         return { title: ids.map((x) => d.lessonById.get(x).name).join(" + "), entries: d.entries.filter((e) => ids.includes(e.l)), back: "#/" };
@@ -462,6 +464,9 @@
             h("span", { class: "lm" }, t("t_words", { n: es.length }), " · ", t("t_known", { k, n: es.length })),
             h("span", { class: "meter-bar" }, h("span", { style: `width:${es.length ? Math.round((k / es.length) * 100) : 0}%` }))));
         })),
+        d.entries.some((e) => e.wt === "verbe")
+          ? h("p", null, h("a", { href: "#/p/pron/verbes" }, t("t_pron_all")), h("span", { class: "muted small" }, " – ", t("t_pron_sub")))
+          : null,
         d.lessons.length > 1 ? h("details", { class: "panel combine" },
           h("summary", null, t("t_combine")),
           d.lessons.map((l) => h("label", null, h("input", { type: "checkbox", onchange: (ev) => { ev.target.checked ? picks.add(l.id) : picks.delete(l.id); upd(); } }), l.name)),
@@ -487,7 +492,8 @@
         h("div", { class: "modes" },
           mode("cards", "layers", t("t_cards"), t("t_cards_sub")),
           mode("quiz", "list-checks", t("t_quiz"), t("t_quiz_sub")),
-          mode("write", "pen-line", t("t_write"), t("t_write_sub"))),
+          mode("write", "pen-line", t("t_write"), t("t_write_sub")),
+          s.entries.some((e) => e.wt === "verbe") ? mode("pron", "users", t("t_pron"), t("t_pron_sub")) : null),
         h("h2", null, `${t("t_wordlist")} (${s.entries.length})`),
         h("ul", { class: "wordlist" }, s.entries.map((e) =>
           h("li", null,
@@ -640,7 +646,9 @@
           const showSol = !ok || msg;
           feedback.replaceChildren(...[
             h("strong", null, ok ? [icon("check"), " ", t("t_right")] : verdict === "almost" ? "" : [icon("x"), " ", t("t_wrong")]), " ", msg || "",
-            showSol ? h("div", { class: "solution" }, t("t_solution"), " ", h("b", { lang: "blo" }, q.c.e.a), " = ", tr(q.c.e).text, audioBtn(q.c.e)) : null,
+            showSol ? (q.c.dir === "p"
+              ? h("div", { class: "solution" }, t("t_solution"), " ", h("b", { lang: "blo" }, q.solution))
+              : h("div", { class: "solution" }, t("t_solution"), " ", h("b", { lang: "blo" }, q.c.e.a), " = ", tr(q.c.e).text, audioBtn(q.c.e))) : null,
           ].filter((x) => x != null));
           nextBtn.hidden = false;
           nextBtn.focus();
@@ -675,7 +683,7 @@
           setTimeout(() => input.focus(), 50);
         } else {
           area = h("div", { class: "choices" }, q.choices.map((c) =>
-            h("button", { type: "button", class: "choice", lang: q.c.dir === "x" ? "blo" : LANG, onclick: (e) => {
+            h("button", { type: "button", class: "choice", lang: q.c.dir === "a" ? LANG : "blo", onclick: (e) => {
               if (answered) return;
               const ok = c === q.answer;
               for (const b of area.querySelectorAll("button")) {
@@ -688,7 +696,7 @@
         }
         wrap.replaceChildren(
           practiceHeader(s.title, s.back, idx, questions.length),
-          h("div", { class: "panel question" }, h("div", { class: "q-label" }, q.label), promptSide(q.c)),
+          h("div", { class: "panel question" }, h("div", { class: "q-label" }, q.label), q.prompt || promptSide(q.c)),
           area, feedback, nextBtn);
       }
       function next() {
@@ -776,9 +784,43 @@
       return wrap;
     }
 
+    // Pronomen-Übung: Verben ändern sich nie, nur das Pronomen davor (nach Ibrahim Malokia).
+    // Gefragt wird z. B. „nous · aller“ → „gɩ tee“; die Hälfte als Auswahl, die Hälfte zum Tippen.
+    const PRONOUNS = [
+      { a: "n", fr: "je", de: "ich" }, { a: "ʊ", fr: "tu", de: "du" }, { a: "an", fr: "il / elle", de: "er / sie" },
+      { a: "gɩ", fr: "nous", de: "wir" }, { a: "ɩ", fr: "vous", de: "ihr" }, { a: "ban", fr: "ils / elles", de: "sie (Plural)" },
+    ];
+    const isVerb = (e) => e.wt === "verbe";
+    const verbGloss = (e) => tr(e).text.split(/[,/(]/)[0].trim();
+    function pronounQuestions(s) {
+      const verbs = s.entries.filter(isVerb);
+      if (!verbs.length) return [];
+      const now = today();
+      const ranked = shuffle(verbs).map((e) => {
+        const st = L[cardKey(e, "p")];
+        return { e, p: !st || !st[0] ? 1 : st[1] <= now ? st[0] * 0.1 : 2 + (st[1] - now) * 0.01 };
+      }).sort((a, b) => a.p - b.p);
+      const out = [];
+      for (let i = 0; out.length < ROUND && i < ROUND * 3; i++) {
+        const e = ranked[i % ranked.length].e;
+        const pr = PRONOUNS[Math.floor(Math.random() * PRONOUNS.length)];
+        const answer = `${pr.a} ${e.a}`;
+        const prompt = h("div", null, h("div", { class: "q-main" }, `${pr[LANG]} · ${verbGloss(e)}`));
+        const c = { e, dir: "p" };
+        if (out.length % 2 === 0) {
+          const others = shuffle(PRONOUNS.filter((x) => x !== pr)).slice(0, 3).map((x) => `${x.a} ${e.a}`);
+          out.push({ kind: "choice", c, prompt, label: t("t_q_pron"), choices: shuffle([answer, ...others]), answer, solution: answer });
+        } else {
+          out.push({ kind: "input", c, prompt, anii: true, label: t("t_q_pron"), answers: [answer], solution: answer });
+        }
+      }
+      return out;
+    }
+
     function viewPractice(mode, sel) {
       const s = selection(sel);
       if (!s) return notFound();
+      if (mode === "pron") return runner(s, pronounQuestions(s));
       const cards = pickCards(s);
       if (mode === "cards") return flashcards(s, cards);
       if (mode === "quiz") return runner(s, cards.map((c) => quizQ(c, s.entries)));

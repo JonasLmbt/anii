@@ -213,6 +213,7 @@
         field("francais", "Français"),
         field("deutsch", "Deutsch"),
         field("lektion", "Lektion", { list: "lessons", hint: "aus der Liste wählen oder neu eintippen, z. B. „9 · La famille“" }),
+        field("wortart", "Wortart", { list: "wortarten", hint: "„verbe“ für Verben in der Grundform – dann gibt es die Pronomen-Übung" }),
         field("plural", "Plural", { anii: true }),
         field("beispiel", "Beispielsatz", { anii: true }),
         field("notiz", "Anmerkung", { area: true, wide: true, hint: "wird im Wörterbuch angezeigt" }),
@@ -221,7 +222,7 @@
         field("datum", "Datum", { type: "date" }),
         h("label", { class: "field" }, "Sprecher (für die Aufnahme)", spk),
         h("label", { class: "row-check wide" }, ok, "Herkunft geprüft (von jemandem aus Balanka bestätigt)")),
-      lessons, msgs,
+      lessons, h("datalist", { id: "wortarten" }, ["verbe", "nom", "adjectif", "pronom", "expression"].map((w) => h("option", { value: w }))), msgs,
       h("div", { class: "actions" }, btns,
         h("button", { class: "btn", type: "button", onclick: () => { viewList(); } }, "Zurück"),
         !isNew ? h("button", { class: "btn danger", type: "button", onclick: async () => {
@@ -701,7 +702,7 @@
   const TCOLS = [
     ["anii", "Anii", 11, true], ["francais", "Français", 13], ["deutsch", "Deutsch", 13], ["lektion", "Lektion", 12],
     ["plural", "Plural", 9, true], ["beispiel", "Beispiel", 12, true], ["notiz", "Anmerkung", 18, true],
-    ["quelle", "Quelle", 7], ["datum", "Datum", 8.5],
+    ["quelle", "Quelle", 7], ["datum", "Datum", 8.5], ["wortart", "Wortart", 6],
   ];
   let dirty = new Map(); // key -> {id, fields}
   window.addEventListener("beforeunload", (ev) => { if (dirty.size) { ev.preventDefault(); ev.returnValue = ""; } });

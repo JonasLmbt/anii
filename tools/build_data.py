@@ -26,8 +26,8 @@ CSV_FILE = DATA / "vokabeln.csv"
 AUDIO_DIR = DATA / "audio"
 
 COLUMNS = ["id", "anii", "deutsch", "francais", "lektion", "plural", "beispiel", "dialekt",
-           "quelle", "datum", "audio", "sprecher", "audio_plural", "sprecher_plural", "geprueft", "notiz"]
-OPTIONAL_COLUMNS = {"id", "sprecher", "deutsch", "francais", "audio_plural", "sprecher_plural"}  # neuere Spalten; eine Übersetzungsspalte reicht
+           "quelle", "datum", "audio", "sprecher", "audio_plural", "sprecher_plural", "geprueft", "notiz", "wortart"]
+OPTIONAL_COLUMNS = {"id", "sprecher", "deutsch", "francais", "audio_plural", "sprecher_plural", "wortart"}  # neuere Spalten; eine Übersetzungsspalte reicht
 ANII_FIELDS = {"anii", "plural"}  # reiner Anii-Text (Beispielsätze können Übersetzungen enthalten)
 AUDIO_EXT = (".mp3", ".ogg", ".opus", ".m4a", ".webm", ".wav")
 ID_RE = re.compile(r"^w\d{4,}$")
@@ -306,7 +306,7 @@ def build(entries, speakers, alphabet_rows, report, out):
         lessons[lid]["n"] += 1
         item = {"id": e["id"], "a": e["anii"], "l": lid, "fl": anii.first_letter(e["anii"]) or ""}
         for src, dst in (("deutsch", "de"), ("francais", "fr"), ("plural", "pl"), ("beispiel", "ex"),
-                         ("dialekt", "dia"), ("quelle", "src"), ("datum", "date"), ("sprecher", "sp"), ("notiz", "no")):
+                         ("dialekt", "dia"), ("quelle", "src"), ("datum", "date"), ("sprecher", "sp"), ("notiz", "no"), ("wortart", "wt")):
             if e[src]:
                 item[dst] = e[src]
         if audio:

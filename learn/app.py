@@ -37,7 +37,7 @@ COOKIE = "anii_learn"
 SESSION_DAYS = 365
 MAX_BODY = 512 * 1024
 MAX_CARDS = 20000
-KEY_RE = re.compile(r"^w\d{4,}\|[ax]$")
+KEY_RE = re.compile(r"^w\d{4,}\|[axp]$")  # a/x: Richtungen, p: Pronomen-Übung
 LOCK = threading.Lock()
 FAILS = {}  # (ip oder name) -> [Zeitpunkte]
 
