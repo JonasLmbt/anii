@@ -109,8 +109,8 @@
   // ------------------------------------------------------------ Sonderzeichen
   function keyDock() {
     let shift = false;
-    const chars = ["ǝ", "ɛ", "ɩ", "ŋ", "ɔ", "ʊ"];
-    const UP = { "ǝ": "Ǝ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ" };
+    const chars = ["ǝ", "ɖ", "ɛ", "ɩ", "ŋ", "ɔ", "ʊ"];
+    const UP = { "ǝ": "Ǝ", "ɖ": "Ɖ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ" };
     const keys = chars.map((ch) => h("button", { type: "button", tabindex: "-1", onmousedown: (e) => e.preventDefault(), onclick: () => {
       const input = S.lastField;
       if (!input) return;

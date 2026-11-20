@@ -271,7 +271,7 @@
     fromHash();
   }
 
-  const UPPER = { "ǝ": "Ǝ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ" };
+  const UPPER = { "ǝ": "Ǝ", "ɖ": "Ɖ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ" };
   const upperLetter = (l) => (UPPER[l[0]] || l[0].toUpperCase()) + l.slice(1);
 
   // ============================================================ Trainer (Leitner-System)
@@ -585,7 +585,7 @@
 
     function keyBar(input) {
       let shift = false;
-      const chars = ["ǝ", "ɛ", "ɩ", "ŋ", "ɔ", "ʊ"];
+      const chars = ["ǝ", "ɖ", "ɛ", "ɩ", "ŋ", "ɔ", "ʊ"];
       const keys = chars.map((ch) => h("button", { type: "button", tabindex: "-1", onmousedown: (e) => e.preventDefault(), onclick: () => {
         const c = shift ? UPPER[ch] : ch;
         const s = input.selectionStart ?? input.value.length;

@@ -6,11 +6,11 @@ import re
 import unicodedata
 
 # Alphabet in Sortierreihenfolge (Vorgabe des Projekts). Digraphen zählen als ein Buchstabe.
-ALPHABET = "a ǝ b c d e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y".split()
+ALPHABET = "a ǝ b c d ɖ e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y".split()
 DIGRAPHS = sorted((l for l in ALPHABET if len(l) > 1), key=len, reverse=True)
 
 # Großbuchstaben, die Python nicht von selbst richtig bildet, sind hier ausdrücklich festgelegt.
-UPPER = {"ǝ": "Ǝ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ"}
+UPPER = {"ǝ": "Ǝ", "ɖ": "Ɖ", "ɛ": "Ɛ", "ɩ": "Ɩ", "ŋ": "Ŋ", "ɔ": "Ɔ", "ʊ": "Ʊ"}
 LOWER = {v: k for k, v in UPPER.items()}
 
 
