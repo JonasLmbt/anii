@@ -33,6 +33,7 @@ PAGES = [
     ("dict", {"fr": "dictionnaire", "de": "woerterbuch"}, "book-open"),
     ("train", {"fr": "apprendre", "de": "lernen"}, "layers"),
     ("alphabet", {"fr": "alphabet", "de": "alphabet"}, "type"),
+    ("grammaire", {"fr": "grammaire", "de": "grammatik"}, "book"),
     ("langue", {"fr": "langue", "de": "sprache"}, "globe"),
     ("sources", {"fr": "sources", "de": "quellen"}, "book"),
     ("participer", {"fr": "participer", "de": "mitmachen"}, "hand-heart"),
@@ -207,6 +208,7 @@ class Builder:
             self.write(lang, "start", n["start"], self.start(lang))
             self.write(lang, "langue", n["langue"], self.content(lang, "langue"))
             self.write(lang, "alphabet", n["alphabet"], self.alphabet(lang))
+            self.write(lang, "grammaire", n["grammaire"], self.content(lang, "grammaire"))
             self.write(lang, "dict", n["dict"],
                        f'<h1>{esc(n["dict"])}</h1><div id="app" data-app="dict"><p class="loading">{esc(ui["loading"])}</p></div>'
                        '<noscript><p>JavaScript est nécessaire pour la recherche. / Für die Suche wird JavaScript benötigt. '
@@ -236,6 +238,8 @@ class Builder:
             "train": (f"{len(d['lessons'])} leçons · cartes, quiz, écriture" if fr
                       else f"{len(d['lessons'])} Lektionen · Karteikarten, Quiz, Schreiben"),
             "alphabet": "Les 31 lettres et leur ordre" if fr else "Die 31 Buchstaben und ihre Reihenfolge",
+            "grammaire": ("Pronoms, futur, négation, ordre des mots" if fr
+                          else "Pronomen, Zukunft, Verneinung, Satzbau"),
             "langue": "Origine, dialectes, écriture" if fr else "Herkunft, Dialekte, Schrift",
             "sources": "Littérature, licence, téléchargements" if fr else "Literatur, Lizenz, Downloads",
             "participer": "Corriger, ajouter, enregistrer" if fr else "Korrigieren, ergänzen, aufnehmen",

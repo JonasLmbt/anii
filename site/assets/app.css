@@ -320,3 +320,15 @@ main.wrap:has(.tiles) { max-width: 960px; }
 .account.hint p { color: var(--muted); font-size: .95rem; border-left: 2px solid var(--brand); padding-left: .8rem; }
 .speak.sm { width: 30px; height: 30px; vertical-align: middle; }
 .speak.sm .icon { width: 14px; height: 14px; }
+
+/* ---------- Grammatik: Beispielsätze ---------- */
+.gex { border-left: 2px solid var(--brand); padding: .2rem 0 .2rem 1rem; margin: 1rem 0; }
+.gex p { margin: .1rem 0; }
+.gex .ga { font-size: 1.25rem; font-weight: 700; }
+.gex .ga b { color: var(--brand); }
+.gex .gg { font-size: .85rem; color: var(--muted); letter-spacing: .01em; }
+.gex .gt { font-style: italic; }
+.gtable { border-collapse: collapse; margin: 1rem 0; min-width: 18rem; }
+.gtable th, .gtable td { text-align: left; padding: .4rem 1.2rem .4rem 0; border-bottom: 1px solid var(--line); }
+.gtable th { font-size: .8rem; color: var(--muted); font-weight: 400; }
+.gtable td[lang="blo"] { font-weight: 700; }
