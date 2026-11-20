@@ -40,7 +40,7 @@ PAGES = [
 ]
 JS_PAGES = {"dict", "train", "participer"}
 # Vorübergehend ausgeblendete Seiten: nicht gebaut, nicht verlinkt. Zum Einblenden einfach entfernen.
-HIDDEN = {"participer"}
+HIDDEN = {"participer", "grammaire"}
 VISIBLE = [p for p in PAGES if p[0] not in HIDDEN]
 CUR_PAGE = ' aria-current="page"'
 CUR_LANG = ' aria-current="true"'
@@ -208,7 +208,8 @@ class Builder:
             self.write(lang, "start", n["start"], self.start(lang))
             self.write(lang, "langue", n["langue"], self.content(lang, "langue"))
             self.write(lang, "alphabet", n["alphabet"], self.alphabet(lang))
-            self.write(lang, "grammaire", n["grammaire"], self.content(lang, "grammaire"))
+            if "grammaire" not in HIDDEN:
+                self.write(lang, "grammaire", n["grammaire"], self.content(lang, "grammaire"))
             self.write(lang, "dict", n["dict"],
                        f'<h1>{esc(n["dict"])}</h1><div id="app" data-app="dict"><p class="loading">{esc(ui["loading"])}</p></div>'
                        '<noscript><p>JavaScript est nécessaire pour la recherche. / Für die Suche wird JavaScript benötigt. '
