@@ -237,7 +237,7 @@ class Builder:
                      else f"{len(d['entries'])} Wörter · Suche auf Anii, Französisch, Deutsch"),
             "train": (f"{len(d['lessons'])} leçons · cartes, quiz, écriture" if fr
                       else f"{len(d['lessons'])} Lektionen · Karteikarten, Quiz, Schreiben"),
-            "alphabet": "Les 32 lettres et leur ordre" if fr else "Die 32 Buchstaben und ihre Reihenfolge",
+            "alphabet": "Les 33 lettres et leur ordre" if fr else "Die 33 Buchstaben und ihre Reihenfolge",
             "grammaire": ("Pronoms, futur, négation, ordre des mots" if fr
                           else "Pronomen, Zukunft, Verneinung, Satzbau"),
             "langue": "Origine, dialectes, écriture" if fr else "Herkunft, Dialekte, Schrift",
