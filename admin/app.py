@@ -209,6 +209,8 @@ def check_rows(header, rows, target_id):
 
 def entry_from(payload):
     e = {c: clean(payload.get(c, "")) for c in bd.COLUMNS}
+    for c in ("anii", "plural"):
+        e[c] = anii.anii_spelling(e[c])  # d → ɖ
     m = re.match(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$", e["datum"])
     if m:
         e["datum"] = f"{m.group(3)}-{int(m.group(2)):02d}-{int(m.group(1)):02d}"
@@ -280,6 +282,8 @@ def normalize_fields(fields):
             m = re.match(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$", v)
             if m:
                 v = f"{m.group(3)}-{int(m.group(2)):02d}-{int(m.group(1)):02d}"
+        if c in ("anii", "plural"):
+            v = anii.anii_spelling(v)  # d → ɖ
         if c == "geprueft":
             v = "ja" if v.lower() in ("ja", "true", "1", "on", "oui") else "nein"
         out[c] = v
@@ -491,6 +495,8 @@ def api_inbox_save(p):
         if not isinstance(r, dict):
             continue
         row = {c: clean(r.get(c, "")) for c in INBOX_FIELDS}
+        for c in ("anii", "plural"):
+            row[c] = anii.anii_spelling(row[c])  # d → ɖ
         if not any(row[c] for c in ("anii", "francais", "deutsch", "plural", "beispiel", "notiz")):
             continue  # leere Zeile
         uid = str(r.get("uid") or "")

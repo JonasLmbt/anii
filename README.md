@@ -107,7 +107,7 @@ Die Prüfung meldet:
 Alles wird auf Unicode NFC normalisiert. Mit `tests/fehlerbeispiel.csv` kann man die Meldungen ausprobieren.
 
 **Alphabet und Sortierung** stehen in [`tools/anii.py`](tools/anii.py):
-`a ǝ b c d ɖ e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y`. Die Digraphen gb, kp, ny und ŋm
+`a ǝ b c ɖ e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y`. Die Digraphen gb, kp, ny und ŋm
 werden als ein Buchstabe sortiert, Tonzeichen beim Sortieren ignoriert. Die Suche findet Wörter auch
 ohne Sonderzeichen („e“ findet ɛ und ǝ). Die Faltung steht doppelt in `tools/anii.py` und in
 `site/assets/app.js` und muss in beiden Dateien gleich bleiben.

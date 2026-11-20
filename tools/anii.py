@@ -6,7 +6,7 @@ import re
 import unicodedata
 
 # Alphabet in Sortierreihenfolge (Vorgabe des Projekts). Digraphen zählen als ein Buchstabe.
-ALPHABET = "a ǝ b c d ɖ e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y".split()
+ALPHABET = "a ǝ b c ɖ e ɛ f g gb h i ɩ j k kp l m n ny ŋ ŋm o ɔ p r s t u ʊ w y".split()
 DIGRAPHS = sorted((l for l in ALPHABET if len(l) > 1), key=len, reverse=True)
 
 # Großbuchstaben, die Python nicht von selbst richtig bildet, sind hier ausdrücklich festgelegt.
@@ -129,16 +129,31 @@ def first_letter(word):
     return None
 
 
+# Im Balanka-Anii gibt es nur einen d-Laut, geschrieben ɖ (Entscheidung Jonas, 20.11.2026).
+# Ein „d“ in Anii-Text ist deshalb immer ein Tippfehler und wird beim Speichern umgewandelt.
+ANII_SUBST = {"d": "ɖ", "D": "Ɖ"}
+_ANII_SUBST = str.maketrans(ANII_SUBST)
+
+
+def anii_spelling(text):
+    """Anii-Schreibung vereinheitlichen (d → ɖ)."""
+    return (text or "").translate(_ANII_SUBST)
+
+
 def check_chars(text, anii_field):
     """Liefert (zeichen, vorschlag, beschreibung) für verdächtige Zeichen."""
     found = []
+    if anii_field:
+        for ch in text:
+            if ch in ANII_SUBST:
+                found.append((ch, ANII_SUBST[ch], f"„{ch}“ wird im Balanka-Anii „{ANII_SUBST[ch]}“ geschrieben"))
     for ch in text:
         if ch in LOOKALIKES:
             sug, desc = LOOKALIKES[ch]
             found.append((ch, sug, desc))
     if anii_field:
         for ch in unicodedata.normalize("NFD", text):
-            if ch in LOOKALIKES or ch in TONE_MARKS or ch in ALLOWED_ANII:
+            if ch in LOOKALIKES or ch in TONE_MARKS or ch in ALLOWED_ANII or ch in ANII_SUBST:
                 continue
             if unicodedata.combining(ch):
                 found.append((ch, None, f"unbekanntes kombinierendes Zeichen U+{ord(ch):04X}"))

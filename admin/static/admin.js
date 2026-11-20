@@ -46,6 +46,15 @@
   const pushNote = (p) => (p === "ok" ? "Gespeichert – auf der Seite in ca. 2 Minuten." : p === "keine Änderung" ? "Keine Änderung." : "Gespeichert. " + p);
 
   // Such-Faltung wie auf der öffentlichen Seite
+  // Balanka-Anii schreibt den d-Laut immer ɖ: beim Tippen in Anii-Feldern sofort umwandeln
+  function dToDh(el) {
+    el.addEventListener("input", () => {
+      if (!/[dD]/.test(el.value)) return;
+      const pos = el.selectionStart;
+      el.value = el.value.replace(/d/g, "ɖ").replace(/D/g, "Ɖ");
+      try { el.setSelectionRange(pos, pos); } catch { /* egal */ }
+    });
+  }
   const FOLD = { "ǝ": "e", "ə": "e", "ɛ": "e", "ɔ": "o", "ɩ": "i", "ɪ": "i", "ʊ": "u", "ŋ": "n", "ɖ": "d" };
   const fold = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").normalize("NFC").replace(/[ǝəɛɔɩɪʊŋɖ]/g, (c) => FOLD[c]);
 
@@ -146,6 +155,7 @@
       const el = h(tag, { name, value: e[name] || "", autocomplete: "off", spellcheck: opts.anii ? "false" : null, lang: opts.anii ? "blo" : null,
         autocapitalize: opts.anii ? "off" : null, list: opts.list || null, type: opts.type || null, required: opts.required || null });
       if (opts.anii) el.addEventListener("focus", () => { S.lastField = el; });
+      if (name === "anii" || name === "plural") dToDh(el);
       el.addEventListener("input", scheduleCheck);
       F[name] = el;
       return h("label", { class: "field" + (opts.wide ? " wide" : "") }, label, opts.hint ? h("small", null, opts.hint) : null, el);
@@ -638,6 +648,7 @@
         const inp = h("input", { value: r[col] || "", "data-col": col, list: col === "lektion" ? "i-lessons" : null, lang: isAnii ? "blo" : null,
           spellcheck: isAnii ? "false" : null, autocomplete: "off", autocapitalize: "off", type: col === "datum" ? "date" : null });
         if (isAnii) inp.addEventListener("focus", () => { S.lastField = inp; });
+        if (col === "anii" || col === "plural") dToDh(inp);
         inp.addEventListener("input", () => {
           r[col] = inp.value;
           if (col === "quelle") remember.set("quelle", inp.value);
@@ -724,6 +735,7 @@
         const inp = h("input", { value: e[col] || "", "data-col": col, list: col === "lektion" ? "t-lessons" : null,
           lang: isAnii ? "blo" : null, spellcheck: isAnii ? "false" : null, autocomplete: "off", autocapitalize: "off" });
         if (isAnii) inp.addEventListener("focus", () => { S.lastField = inp; });
+        if (col === "anii" || col === "plural") dToDh(inp);
         inp.addEventListener("input", () => {
           const entry = dirty.get(key) || { id: e.id, key, fields: {} };
           entry.fields[col] = inp.value;

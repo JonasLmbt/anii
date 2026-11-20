@@ -649,6 +649,12 @@
         let area;
         if (q.kind === "input") {
           const input = h("input", { class: "answer", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false", enterkeyhint: "go", "aria-label": q.label, lang: q.anii ? "blo" : LANG });
+          if (q.anii) input.addEventListener("input", () => { // Balanka-Anii schreibt d immer ɖ
+            if (!/[dD]/.test(input.value)) return;
+            const pos = input.selectionStart;
+            input.value = input.value.replace(/d/g, "ɖ").replace(/D/g, "Ɖ");
+            try { input.setSelectionRange(pos, pos); } catch { /* egal */ }
+          });
           const checkBtn = h("button", { class: "btn primary block", type: "submit" }, t("t_check"));
           const skip = h("button", { class: "linkish", type: "button", onclick: () => {
             if (answered) return;
